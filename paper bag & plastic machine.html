@@ -12,10 +12,13 @@
 </head>
 <body>
 
-<!-- 图片全屏预览模块 -->
+<!-- 图片全屏预览模块（升级图集预览） -->
 <div class="image-preview-overlay" id="imagePreviewOverlay">
 <span class="preview-close" id="previewClose"><i class="fas fa-times"></i></span>
-<img id="previewImg" src="" alt="preview">
+<div class="preview-track" id="previewTrack"></div>
+<button class="preview-arrow preview-prev"><i class="fas fa-chevron-left"></i></button>
+<button class="preview-arrow preview-next"><i class="fas fa-chevron-right"></i></button>
+<div class="preview-dots" id="previewDots"></div>
 </div>
 
 <nav class="navbar">
@@ -143,12 +146,12 @@ alt="Conical Paper Cup Machine">
 <div class="modal-box">
 <button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button>
 <div class="modal-img-wrap">
-    <div class="slider-container">
-        <div class="slider-track" id="sliderTrack"></div>
-        <button class="slider-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
-        <button class="slider-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
-    </div>
-    <div class="slider-dots" id="sliderDots"></div>
+<div class="slider-container">
+<div class="slider-track" id="sliderTrack"></div>
+<button class="slider-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+<button class="slider-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+</div>
+<div class="slider-dots" id="sliderDots"></div>
 </div>
 <div class="modal-content-wrap">
 <h2 id="modalTitle"></h2>

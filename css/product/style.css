@@ -35,26 +35,26 @@ padding-right: clamp(1rem, 5vw, 2rem);
 
 /* ========== Spinner Loading 动画 ========== */
 .img-wrap {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #eef2f5;
+position: relative;
+width: 100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: #eef2f5;
 }
 .img-loader {
-  width: 34px;
-  height: 34px;
-  border: 3px solid #d9e2e1;
-  border-top-color: #c2410c;
-  border-radius: 50%;
-  animation: spin 0.85s linear infinite;
-  position: absolute;
-  z-index: 2;
+width: 34px;
+height: 34px;
+border: 3px solid #d9e2e1;
+border-top-color: #c2410c;
+border-radius: 50%;
+animation: spin 0.85s linear infinite;
+position: absolute;
+z-index: 2;
 }
 .img-loader.hidden {
-  display: none;
+display: none;
 }
 @keyframes spin {
   to { transform: rotate(360deg); }
@@ -313,12 +313,12 @@ gap: 10px;
 
 /* ========== 懒加载图片样式 ========== */
 .lazy-img {
-    background-color: transparent;
-    transition: opacity 0.4s ease;
-    opacity: 0;
+background-color: transparent;
+transition: opacity 0.4s ease;
+opacity: 0;
 }
 .lazy-img.loaded {
-    opacity: 1;
+opacity: 1;
 }
 
 /* ========== 弹窗 + 渐隐图集样式 ========== */
@@ -392,8 +392,8 @@ opacity: 1;
 pointer-events: auto;
 }
 .slide-item .img-wrap {
-  width: 100%;
-  height: 100%;
+width: 100%;
+height: 100%;
 }
 .slide-item img{
 width:100%;
@@ -440,9 +440,6 @@ transition: background 0.2s ease;
 }
 .dot.active{
 background:#b53a17;
-}
-.dot.hidden{
-display:none;
 }
 
 .modal-close {
@@ -506,29 +503,29 @@ box-shadow: 0 10px 20px rgba(36, 84, 68, 0.22);
 
 /* 自动轮播开关按钮 */
 .autoplay-toggle {
-    position: absolute;
-    bottom: 14px;
-    right: 16px;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: none;
-    background: #fff;
-    color: #1e293b;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 3;
-    border: 1px solid #e3e9e7;
+position: absolute;
+bottom: 14px;
+right: 16px;
+width: 36px;
+height: 36px;
+border-radius: 50%;
+border: none;
+background: #fff;
+color: #1e293b;
+box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 3;
+border: 1px solid #e3e9e7;
 }
 .autoplay-toggle:hover {
-    background: #f7ede6;
-    color: #b53a17;
+background: #f7ede6;
+color: #b53a17;
 }
 
-/* ========== 图片全屏预览（白色背景） ========== */
+/* ========== 全屏预览图集样式（新增） ========== */
 .image-preview-overlay {
 position: fixed;
 inset: 0;
@@ -542,14 +539,6 @@ padding: 20px;
 .image-preview-overlay.active {
 display: flex;
 }
-.image-preview-overlay img {
-max-width:90%;
-max-height:90vh;
-object-fit:contain;
-background:#ffffff;
-box-shadow: 0 0 25px rgba(0,0,0,0.08);
-cursor: zoom-out;
-}
 .preview-close {
 position:fixed;
 top:20px;
@@ -558,6 +547,77 @@ color:#1e293b;
 font-size:32px;
 cursor:pointer;
 z-index:10001;
+}
+.preview-track {
+position: relative;
+width: 100%;
+height: 100%;
+max-width: 90%;
+max-height: 90vh;
+}
+.preview-slide {
+position: absolute;
+inset:0;
+opacity:0;
+transition: opacity 0.45s ease-in-out;
+pointer-events:none;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.preview-slide.active {
+opacity:1;
+pointer-events:auto;
+}
+.preview-slide .img-wrap {
+width:100%;
+height:100%;
+background: transparent;
+}
+.preview-slide img {
+max-width:100%;
+max-height:90vh;
+object-fit:contain;
+background:#ffffff;
+}
+.preview-arrow {
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+width:44px;
+height:44px;
+border-radius:50%;
+border:none;
+background:#fff;
+color:#1e293b;
+cursor:pointer;
+z-index:10001;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 4px 14px rgba(0,0,0,0.15);
+}
+.preview-prev {left:20px;}
+.preview-next {right:20px;}
+.preview-dots {
+position:absolute;
+bottom:24px;
+left:50%;
+transform:translateX(-50%);
+display:flex;
+gap:10px;
+z-index:10001;
+}
+.preview-dot {
+width:11px;
+height:11px;
+border-radius:50%;
+background:#b8c4c2;
+cursor:pointer;
+transition: background 0.2s;
+}
+.preview-dot.active {
+background:#b53a17;
 }
 
 /* 页脚样式 */
@@ -631,4 +691,10 @@ padding: 1.8rem 1.5rem;
 .product-grid {
 gap: 22px;
 }
+.preview-arrow {
+width:38px;
+height:38px;
+}
+.preview-prev {left:10px;}
+.preview-next {right:10px;}
 }

@@ -8,10 +8,13 @@ const closeBtn = document.getElementById('closeModal');
 const prevBtn = document.querySelector('.prev-arrow');
 const nextBtn = document.querySelector('.next-arrow');
 
-// 全屏预览
+// 全屏预览图集
 const previewOverlay = document.getElementById("imagePreviewOverlay");
-const previewImg = document.getElementById("previewImg");
+const previewTrack = document.getElementById("previewTrack");
+const previewDots = document.getElementById("previewDots");
 const previewClose = document.getElementById("previewClose");
+const previewPrev = document.querySelector(".preview-prev");
+const previewNext = document.querySelector(".preview-next");
 
 let galleryList = [];
 let currentIndex = 0;
@@ -22,180 +25,180 @@ let autoplayToggleBtn = null;
 
 // ========== 懒加载观察器 ==========
 const lazyObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const imgWrap = entry.target;
-      const img = imgWrap.querySelector('.lazy-img');
-      const loader = imgWrap.querySelector('.img-loader');
-      const realSrc = img.dataset.lazy;
-      if (!realSrc) return;
+entries.forEach(entry => {
+if (entry.isIntersecting) {
+const imgWrap = entry.target;
+const img = imgWrap.querySelector('.lazy-img');
+const loader = imgWrap.querySelector('.img-loader');
+const realSrc = img.dataset.lazy;
+if (!realSrc) return;
 
-      const tempImg = new Image();
-      tempImg.src = realSrc;
-      tempImg.onload = () => {
-        img.src = realSrc;
-        img.classList.add('loaded');
-        loader.classList.add('hidden');
-      };
-      tempImg.onerror = () => {
-        img.src = realSrc;
-        img.classList.add('loaded');
-        loader.classList.add('hidden');
-      };
-      observer.unobserve(imgWrap);
-    }
-  });
+const tempImg = new Image();
+tempImg.src = realSrc;
+tempImg.onload = () => {
+img.src = realSrc;
+img.classList.add('loaded');
+loader.classList.add('hidden');
+};
+tempImg.onerror = () => {
+img.src = realSrc;
+img.classList.add('loaded');
+loader.classList.add('hidden');
+};
+observer.unobserve(imgWrap);
+}
+});
 }, {
-  rootMargin: "150px 0px",
-  threshold: 0.01
+rootMargin: "150px 0px",
+threshold: 0.01
 });
 
 function initLazyImages() {
-  document.querySelectorAll('.product-img-box').forEach(box => {
-    if (!box.querySelector('.img-wrap')) {
-      const oldImg = box.querySelector('.lazy-img');
-      const wrap = document.createElement('div');
-      wrap.className = 'img-wrap';
-      const loader = document.createElement('div');
-      loader.className = 'img-loader';
-      wrap.appendChild(loader);
-      wrap.appendChild(oldImg);
-      box.appendChild(wrap);
-    }
-    lazyObserver.observe(box.querySelector('.img-wrap'));
-  });
+document.querySelectorAll('.product-img-box').forEach(box => {
+if (!box.querySelector('.img-wrap')) {
+const oldImg = box.querySelector('.lazy-img');
+const wrap = document.createElement('div');
+wrap.className = 'img-wrap';
+const loader = document.createElement('div');
+loader.className = 'img-loader';
+wrap.appendChild(loader);
+wrap.appendChild(oldImg);
+box.appendChild(wrap);
+}
+lazyObserver.observe(box.querySelector('.img-wrap'));
+});
 }
 
-// 渲染图集
+// 渲染弹窗内滑块
 function renderSlider(images){
-    galleryList = images;
-    currentIndex = 0;
-    sliderTrack.innerHTML = '';
-    sliderDots.innerHTML = '';
+galleryList = images;
+currentIndex = 0;
+sliderTrack.innerHTML = '';
+sliderDots.innerHTML = '';
 
-    if(autoplayToggleBtn) autoplayToggleBtn.remove();
+if(autoplayToggleBtn) autoplayToggleBtn.remove();
 
-    images.forEach((src, idx)=>{
-        const slide = document.createElement('div');
-        slide.className = 'slide-item' + (idx === 0 ? ' active' : '');
+images.forEach((src, idx)=>{
+const slide = document.createElement('div');
+slide.className = 'slide-item' + (idx === 0 ? ' active' : '');
 
-        const wrap = document.createElement('div');
-        wrap.className = 'img-wrap';
-        const loader = document.createElement('div');
-        loader.className = 'img-loader';
-        wrap.appendChild(loader);
+const wrap = document.createElement('div');
+wrap.className = 'img-wrap';
+const loader = document.createElement('div');
+loader.className = 'img-loader';
+wrap.appendChild(loader);
 
-        const img = document.createElement('img');
-        img.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
-        img.dataset.lazy = src;
-        img.alt = "gallery";
-        img.classList.add('lazy-img');
+const img = document.createElement('img');
+img.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+img.dataset.lazy = src;
+img.alt = "gallery";
+img.classList.add('lazy-img');
 
-        img.addEventListener('click',()=>{
-            previewImg.src = src;
-            previewOverlay.classList.add("active");
-        })
-        wrap.appendChild(img);
-        slide.appendChild(wrap);
-        sliderTrack.appendChild(slide);
-        lazyObserver.observe(wrap);
+img.addEventListener('click',()=>{
+renderPreviewGallery(galleryList, idx);
+previewOverlay.classList.add("active");
+})
+wrap.appendChild(img);
+slide.appendChild(wrap);
+sliderTrack.appendChild(slide);
+lazyObserver.observe(wrap);
 
-        const dot = document.createElement('span');
-        dot.className = 'dot' + (idx === 0 ? ' active' : '');
-        dot.dataset.idx = idx;
-        dot.addEventListener('click',()=>{
-            goToSlide(idx);
-            resetAutoPlay();
-        })
-        sliderDots.appendChild(dot);
-    })
+const dot = document.createElement('span');
+dot.className = 'dot' + (idx === 0 ? ' active' : '');
+dot.dataset.idx = idx;
+dot.addEventListener('click',()=>{
+goToSlide(idx);
+resetAutoPlay();
+})
+sliderDots.appendChild(dot);
+})
 
-    if(images.length <=1){
-        prevBtn.classList.add('hidden');
-        nextBtn.classList.add('hidden');
-        sliderDots.style.display = "none";
-        stopAutoPlay();
-    }else{
-        prevBtn.classList.remove('hidden');
-        nextBtn.classList.remove('hidden');
-        sliderDots.style.display = "flex";
+if(images.length <=1){
+prevBtn.classList.add('hidden');
+nextBtn.classList.add('hidden');
+sliderDots.style.display = "none";
+stopAutoPlay();
+}else{
+prevBtn.classList.remove('hidden');
+nextBtn.classList.remove('hidden');
+sliderDots.style.display = "flex";
 
-        autoplayToggleBtn = document.createElement('button');
-        autoplayToggleBtn.className = 'autoplay-toggle';
-        autoplayToggleBtn.innerHTML = isAutoPlay ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
-        autoplayToggleBtn.title = isAutoPlay ? "Pause autoplay" : "Start autoplay";
-        autoplayToggleBtn.addEventListener('click', ()=>{
-            isAutoPlay = !isAutoPlay;
-            autoplayToggleBtn.innerHTML = isAutoPlay ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
-            autoplayToggleBtn.title = isAutoPlay ? "Pause autoplay" : "Start autoplay";
-            if(isAutoPlay) startAutoPlay();
-            else stopAutoPlay();
-        })
-        document.querySelector('.modal-img-wrap').appendChild(autoplayToggleBtn);
+autoplayToggleBtn = document.createElement('button');
+autoplayToggleBtn.className = 'autoplay-toggle';
+autoplayToggleBtn.innerHTML = isAutoPlay ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+autoplayToggleBtn.title = isAutoPlay ? "Pause autoplay" : "Start autoplay";
+autoplayToggleBtn.addEventListener('click', ()=>{
+isAutoPlay = !isAutoPlay;
+autoplayToggleBtn.innerHTML = isAutoPlay ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
+autoplayToggleBtn.title = isAutoPlay ? "Pause autoplay" : "Start autoplay";
+if(isAutoPlay) startAutoPlay();
+else stopAutoPlay();
+})
+document.querySelector('.modal-img-wrap').appendChild(autoplayToggleBtn);
 
-        startAutoPlay();
-    }
-    updateActiveSlide();
+startAutoPlay();
+}
+updateActiveSlide();
 }
 
 function updateActiveSlide(){
-    const slides = sliderTrack.querySelectorAll('.slide-item');
-    const dots = sliderDots.querySelectorAll('.dot');
-    slides.forEach((s,i)=>{
-        s.classList.toggle('active', i === currentIndex);
-    })
-    dots.forEach((d,i)=>{
-        d.classList.toggle('active', i === currentIndex);
-    })
+const slides = sliderTrack.querySelectorAll('.slide-item');
+const dots = sliderDots.querySelectorAll('.dot');
+slides.forEach((s,i)=>{
+s.classList.toggle('active', i === currentIndex);
+})
+dots.forEach((d,i)=>{
+d.classList.toggle('active', i === currentIndex);
+})
 }
 function goToSlide(idx){
-    if(idx <0) idx = galleryList.length -1;
-    if(idx >= galleryList.length) idx = 0;
-    currentIndex = idx;
-    updateActiveSlide();
+if(idx <0) idx = galleryList.length -1;
+if(idx >= galleryList.length) idx = 0;
+currentIndex = idx;
+updateActiveSlide();
 }
 
 // 自动轮播
 function startAutoPlay(){
-    stopAutoPlay();
-    if(!isAutoPlay || galleryList.length <=1) return;
-    autoPlayTimer = setInterval(()=>{
-        goToSlide(currentIndex + 1);
-    }, AUTO_PLAY_DELAY);
+stopAutoPlay();
+if(!isAutoPlay || galleryList.length <=1) return;
+autoPlayTimer = setInterval(()=>{
+goToSlide(currentIndex + 1);
+}, AUTO_PLAY_DELAY);
 }
 function stopAutoPlay(){
-    clearInterval(autoPlayTimer);
-    autoPlayTimer = null;
+clearInterval(autoPlayTimer);
+autoPlayTimer = null;
 }
 function resetAutoPlay(){
-    stopAutoPlay();
-    if(isAutoPlay) startAutoPlay();
+stopAutoPlay();
+if(isAutoPlay) startAutoPlay();
 }
 
 prevBtn.addEventListener('click', ()=> {
-    goToSlide(currentIndex -1);
-    resetAutoPlay();
+goToSlide(currentIndex -1);
+resetAutoPlay();
 });
 nextBtn.addEventListener('click', ()=> {
-    goToSlide(currentIndex +1);
-    resetAutoPlay();
+goToSlide(currentIndex +1);
+resetAutoPlay();
 });
 
 // 触摸手势
 let touchStartX = 0;
 let touchEndX = 0;
 sliderTrack.addEventListener('touchstart', e=>{
-    touchStartX = e.changedTouches[0].screenX;
-    stopAutoPlay();
+touchStartX = e.changedTouches[0].screenX;
+stopAutoPlay();
 })
 sliderTrack.addEventListener('touchend', e=>{
-    touchEndX = e.changedTouches[0].screenX;
-    const diff = touchStartX - touchEndX;
-    if(Math.abs(diff) > 40){
-        if(diff>0) goToSlide(currentIndex+1);
-        else goToSlide(currentIndex-1);
-    }
-    resetAutoPlay();
+touchEndX = e.changedTouches[0].screenX;
+const diff = touchStartX - touchEndX;
+if(Math.abs(diff) > 40){
+if(diff>0) goToSlide(currentIndex+1);
+else goToSlide(currentIndex-1);
+}
+resetAutoPlay();
 })
 
 // hover暂停
@@ -214,7 +217,7 @@ modalDesc.textContent = card.dataset.desc;
 renderSlider(imgs);
 modal.classList.add('active');
 document.body.style.overflow = 'hidden';
-    })
+})
 })
 function closeModalFunc(){
 modal.classList.remove('active');
@@ -225,20 +228,97 @@ closeBtn.addEventListener('click', closeModalFunc);
 modal.addEventListener('click', function(e){
 if(e.target === modal){
 closeModalFunc();
-    }
+}
 })
 
-// 大图预览关闭
-previewImg.addEventListener("click", function(){
-previewOverlay.classList.remove("active");
-});
-previewClose.addEventListener("click", function(){
+// ========== 全屏预览图集逻辑 ==========
+let previewGallery = [];
+let previewIndex = 0;
+let previewTouchStartX = 0;
+let previewTouchEndX = 0;
+
+function renderPreviewGallery(list, startIdx=0){
+previewGallery = list;
+previewIndex = startIdx;
+previewTrack.innerHTML = '';
+previewDots.innerHTML = '';
+
+previewGallery.forEach((src, idx)=>{
+const previewSlide = document.createElement('div');
+previewSlide.className = 'preview-slide' + (idx === previewIndex ? ' active' : '');
+
+const wrap = document.createElement('div');
+wrap.className = 'img-wrap preview-img-wrap';
+const loader = document.createElement('div');
+loader.className = 'img-loader';
+wrap.appendChild(loader);
+
+const img = document.createElement('img');
+img.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+img.dataset.lazy = src;
+img.alt = "preview";
+img.classList.add('lazy-img');
+wrap.appendChild(img);
+previewSlide.appendChild(wrap);
+previewTrack.appendChild(previewSlide);
+lazyObserver.observe(wrap);
+
+const dot = document.createElement('span');
+dot.className = 'preview-dot' + (idx === previewIndex ? ' active' : '');
+dot.dataset.idx = idx;
+dot.addEventListener('click', ()=>{
+goPreviewSlide(idx);
+})
+previewDots.appendChild(dot);
+})
+togglePreviewArrow();
+updatePreviewSlide();
+}
+function updatePreviewSlide(){
+const slides = previewTrack.querySelectorAll('.preview-slide');
+const dots = previewDots.querySelectorAll('.preview-dot');
+slides.forEach((s,i)=> s.classList.toggle('active', i === previewIndex));
+dots.forEach((d,i)=> d.classList.toggle('active', i === previewIndex));
+}
+function goPreviewSlide(idx){
+if(idx <0) idx = previewGallery.length -1;
+if(idx >= previewGallery.length) idx = 0;
+previewIndex = idx;
+updatePreviewSlide();
+}
+function togglePreviewArrow(){
+if(previewGallery.length <=1){
+previewPrev.style.display="none";
+previewNext.style.display="none";
+previewDots.style.display="none";
+}else{
+previewPrev.style.display="flex";
+previewNext.style.display="flex";
+previewDots.style.display="flex";
+}
+}
+previewPrev.addEventListener('click', ()=> goPreviewSlide(previewIndex -1));
+previewNext.addEventListener('click', ()=> goPreviewSlide(previewIndex +1));
+
+previewTrack.addEventListener('touchstart', e=>{
+previewTouchStartX = e.changedTouches[0].screenX;
+})
+previewTrack.addEventListener('touchend', e=>{
+previewTouchEndX = e.changedTouches[0].screenX;
+const diff = previewTouchStartX - previewTouchEndX;
+if(Math.abs(diff)>40){
+if(diff>0) goPreviewSlide(previewIndex+1);
+else goPreviewSlide(previewIndex-1);
+}
+})
+
+previewClose.addEventListener("click", ()=>{
 previewOverlay.classList.remove("active");
 });
 previewOverlay.addEventListener("click", function(e){
 if(e.target === previewOverlay){
 previewOverlay.classList.remove("active");
-    }
+}
 });
 
 // 页面内锚点滚动
@@ -253,10 +333,10 @@ const navHeight = document.querySelector('.navbar').offsetHeight || 80;
 window.scrollTo({
 top: target.getBoundingClientRect().top + window.scrollY - navHeight - 12,
 behavior: 'smooth'
-                });
-            }
-        }
-    })
+});
+}
+}
+})
 })
 
 // 下拉菜单
@@ -280,7 +360,7 @@ toggleDropdown();
 document.addEventListener('click', function(e){
 if(!e.target.closest('.nav-item-dropdown')){
 closeDropdown();
-    }
+}
 });
 
 window.addEventListener('resize', function(){
@@ -288,7 +368,7 @@ const newMobile = window.innerWidth < DROPDOWN_BREAKPOINT;
 if(newMobile !== isMobileMode){
 isMobileMode = newMobile;
 closeDropdown();
-    }
+}
 });
 
 window.addEventListener('DOMContentLoaded', initLazyImages);
