@@ -12,10 +12,13 @@
 </head>
 <body>
 
-<!-- 图片全屏预览模块 -->
+<!-- 图片全屏预览模块（升级图集预览） -->
 <div class="image-preview-overlay" id="imagePreviewOverlay">
 <span class="preview-close" id="previewClose"><i class="fas fa-times"></i></span>
-<img id="previewImg" src="" alt="preview">
+<div class="preview-track" id="previewTrack"></div>
+<button class="preview-arrow preview-prev"><i class="fas fa-chevron-left"></i></button>
+<button class="preview-arrow preview-next"><i class="fas fa-chevron-right"></i></button>
+<div class="preview-dots" id="previewDots"></div>
 </div>
 
 <nav class="navbar">
@@ -43,8 +46,8 @@
 
 <section class="page-banner">
 <div class="container">
-<h1>Welding Machinery</h1>
-<p>High‑performance welding machinery for industrial welding applications. Send inquiry to get technical parameters & best quotation.</p>
+<h1> Welding Machinery</h1>
+<p>High‑performance industrial welding machinery. Send inquiry for specs and competitive quotation.</p>
 </div>
 </section>
 
@@ -66,6 +69,7 @@ alt="Baghouse Dust Collector Welding Machine">
 </div>
 <div class="product-info">
 <h3>Baghouse Dust Collector Welding Machine</h3>
+<p>Automatic welding equipment for dust filter bag cages with auto repair and multi-language touchscreen.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -84,6 +88,7 @@ alt="Automatic Ring Forming & Welding Machine">
 </div>
 <div class="product-info">
 <h3>Automatic Ring Forming & Welding Machine</h3>
+<p>Servo closed-loop wire feeding machine for auto forming and welding metal rings.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -102,6 +107,7 @@ alt="Cobot - Collaborative / Handling Robot">
 </div>
 <div class="product-info">
 <h3>Cobot - Collaborative / Handling Robot</h3>
+<p>Drag-to-teach collaborative robot for flexible welding and material handling tasks.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -120,6 +126,7 @@ alt="Copper-Aluminum Tube Butt Welding Machine">
 </div>
 <div class="product-info">
 <h3>Copper-Aluminum Tube Butt Welding Machine</h3>
+<p>Low heat input butt welder for reliable copper and aluminum tube dissimilar metal joints.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -138,6 +145,7 @@ alt="Fronius Welding Machine">
 </div>
 <div class="product-info">
 <h3>Fronius Welding Machine</h3>
+<p>Modular TPS/i intelligent welding power source with outstanding weld performance.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -146,8 +154,7 @@ alt="Fronius Welding Machine">
 <div class="product-card"
 data-gallery="./image/weldingmachine/Turntable-TypeCopperManifoldBrazingMachine.png"
 data-title="Turntable-Type Copper Manifold Brazing Machine"
-data-desc="This butt welding machine is specifically engineered for the reliable joining of copper tubes to aluminum tubes. It serves as a direct, high-efficiency replacement for conventional high-voltage flash butt welding machines and brazing equipment. &#10;
-By delivering strong, consistent welds with minimal thermal impact, this unit significantly reduces oxidation and energy consumption, offering a superior solution for dissimilar metal tube connections.">
+data-desc="This turntable brazing machine is specially built for copper manifold brazing. It replaces traditional flash butt welding and brazing equipment, producing stable joints with low thermal impact, less oxidation and lower power consumption for dissimilar metal tube connections.">
 <div class="product-img-box">
 <img class="lazy-img"
 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
@@ -156,6 +163,7 @@ alt="Turntable-Type Copper Manifold Brazing Machine">
 </div>
 <div class="product-info">
 <h3>Turntable-Type Copper Manifold Brazing Machine</h3>
+<p>Rotary table brazing system for copper manifold production with stable low-oxidation joints.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -174,6 +182,7 @@ alt="Oxyhydrogen Welding Machine">
 </div>
 <div class="product-info">
 <h3>Oxyhydrogen Welding Machine</h3>
+<p>Water electrolysis oxyhydrogen generator producing high-temperature flame for precision welding.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -192,6 +201,7 @@ alt="Electron Beam Welding Machine">
 </div>
 <div class="product-info">
 <h3>Electron Beam Welding Machine</h3>
+<p>Vacuum electron beam welder for deep penetration, low-distortion welding of special metals.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -213,6 +223,7 @@ alt="3 in 1 Welding Station for H Beam">
 </div>
 <div class="product-info">
 <h3>3 in 1 Welding Station for H Beam</h3>
+<p>All-in-one H-beam station for assembling, welding and straightening to save workshop space.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -231,6 +242,7 @@ alt="H beam Horizontal Assembly and Welding Production Line">
 </div>
 <div class="product-info">
 <h3>H beam Horizontal Assembly and Welding Production Line</h3>
+<p>Horizontal H-beam line with less deformation, optimized for light H-beam fabrication.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -251,6 +263,7 @@ alt="Air Conditioner Heat Exchanger Welding Machine">
 </div>
 <div class="product-info">
 <h3>Air Conditioner Heat Exchanger Welding Machine</h3>
+<p>Auto conveyor brazing system for AC heat exchanger U-tube joints with nitrogen protection.</p>
 <a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
@@ -262,36 +275,17 @@ alt="Air Conditioner Heat Exchanger Welding Machine">
 </div>
 </section>
 
-<!-- 产品卡片 sample 
-<div class="product-card"
-data-gallery="path of the image"
-data-title="Coming Soon"
-data-desc="Coming soon">
-<div class="product-img-box">
-<img class="lazy-img"
-src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-data-lazy="path of the image"
-alt="Coming Soon">
-</div>
-<div class="product-info">
-<h3>Coming Soon</h3>
-<a href="index.html#contact-form">Get Quote <i class="fas fa-arrow-right"></i></a>
-</div>
-</div>
-
--->
-
-<!-- 弹窗模块（新版轮播结构，和js匹配） -->
+<!-- 弹窗模块 -->
 <div class="modal-overlay" id="productModal">
 <div class="modal-box">
 <button class="modal-close" id="closeModal"><i class="fas fa-times"></i></button>
 <div class="modal-img-wrap">
-    <div class="slider-container">
-        <div class="slider-track" id="sliderTrack"></div>
-        <button class="slider-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
-        <button class="slider-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
-    </div>
-    <div class="slider-dots" id="sliderDots"></div>
+<div class="slider-container">
+<div class="slider-track" id="sliderTrack"></div>
+<button class="slider-arrow prev-arrow"><i class="fas fa-chevron-left"></i></button>
+<button class="slider-arrow next-arrow"><i class="fas fa-chevron-right"></i></button>
+</div>
+<div class="slider-dots" id="sliderDots"></div>
 </div>
 <div class="modal-content-wrap">
 <h2 id="modalTitle"></h2>
