@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#f6f8f7"/><stop offset="1" stop-color="#e6ecea"/></linearGradient></defs>
+<rect width="1600" height="900" fill="url(#g)"/>
+<g opacity="0.5" fill="none" stroke="#9db3ab" stroke-width="10">
+<circle cx="800" cy="410" r="96"/><circle cx="800" cy="410" r="34"/>
+<line x1="800" y1="278" x2="800" y2="318"/><line x1="800" y1="502" x2="800" y2="542"/>
+<line x1="668" y1="410" x2="708" y2="410"/><line x1="892" y1="410" x2="932" y2="410"/>
+<line x1="706" y1="316" x2="734" y2="344"/><line x1="866" y1="476" x2="894" y2="504"/>
+<line x1="894" y1="316" x2="866" y2="344"/><line x1="734" y1="476" x2="706" y2="504"/>
+</g>
+<text x="800" y="660" fill="#7d948c" font-family="Helvetica,Arial,sans-serif" font-size="48" letter-spacing="5" text-anchor="middle">IMAGE PENDING</text>
+</svg>

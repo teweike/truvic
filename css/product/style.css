@@ -152,27 +152,11 @@ background-color: #9a3412;
 transform: translateY(-2px);
 }
 
-/* ========== 下拉菜单 ========== */
+/* ========== 产品下拉菜单（支持二级 / 三级｜PC hover + 移动端点击） ========== */
 .nav-item-dropdown {
 position: relative;
 }
-.dropdown-menu {
-visibility: hidden;
-opacity: 0;
-position: absolute;
-top: calc(100%);
-left: 0;
-margin-top: 0;
-background: #ffffff;
-border-radius: 18px;
-box-shadow: 0 12px 28px rgba(15, 40, 35, 0.12);
-min-width: 220px;
-padding: 12px 0;
-transition: visibility 0s linear 0.25s, opacity 0.22s ease;
-z-index: 999;
-pointer-events: none;
-border: 1px solid #e3e9e7;
-}
+/* 按钮与面板之间的透明缓冲，斜向移动鼠标不会丢hover */
 .nav-item-dropdown::after {
 content: "";
 position: absolute;
@@ -180,38 +164,221 @@ width: 100%;
 height: 12px;
 left: 0;
 top: 100%;
-z-index: 998;
+z-index: 9998;
 }
-.dropdown-menu.open {
+
+/* 面板基础样式：一级 .dropdown-menu 与多级 .submenu 共用 */
+.dropdown-menu,
+.submenu {
+list-style: none;
+margin: 0;
+padding: 10px 0;
+background: #ffffff;
+border: 1px solid #e3e9e7;
+border-radius: 18px;
+box-shadow: 0 12px 28px rgba(15, 40, 35, 0.12);
+width: 270px;
+visibility: hidden;
+opacity: 0;
+pointer-events: none;
+transition: visibility 0s linear 0.22s, opacity 0.2s ease, transform 0.2s ease;
+z-index: 9999;
+}
+
+/* 一级面板：按钮正下方 */
+.dropdown-menu {
+position: absolute;
+top: calc(100% + 8px);
+left: 0;
+transform: translateY(6px);
+}
+.nav-item-dropdown:hover > .dropdown-menu,
+.nav-item-dropdown.open > .dropdown-menu {
 visibility: visible;
 opacity: 1;
-transition-delay: 0s;
 pointer-events: auto;
-}
-@media (min-width:769px) {
-.nav-item-dropdown:hover .dropdown-menu {
-visibility: visible;
-opacity: 1;
 transition-delay: 0s;
-pointer-events: auto;
+transform: translateY(0);
 }
-}
-.dropdown-menu li {
+
+.dropdown-menu li,
+.submenu li {
+position: relative;
 list-style: none;
 }
-.dropdown-menu a {
+
+.dropdown-menu a,
+.submenu a {
 background: transparent;
 color: #1e293b;
 border-radius: 0;
-padding: 11px 22px;
+padding: 10px 22px;
 width: 100%;
 display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
 font-weight: 500;
+white-space: normal;
 }
-.dropdown-menu a:hover {
+.dropdown-menu a:hover,
+.submenu a:hover {
 background-color: #f7ede6;
 color: #b53a17;
 transform: none;
+}
+
+/* 分组父项：加重字重 + 右侧箭头 */
+.submenu-trigger {
+cursor: default;
+}
+.dropdown-menu > li.has-submenu > .submenu-trigger {
+font-weight: 700;
+color: #14332a;
+}
+.submenu-trigger i,
+.dropdown-trigger i {
+font-size: 0.7rem;
+opacity: 0.65;
+transition: transform 0.22s ease;
+}
+.dropdown-trigger i {
+font-size: 0.75rem;
+}
+
+/* 二级及以下：从面板右侧滑出，可继续无限嵌套 */
+.submenu {
+position: absolute;
+top: -10px;
+left: calc(100% + 6px);
+transform: translateX(6px);
+width: 300px;
+}
+.dropdown-menu li:hover > .submenu,
+.dropdown-menu li.open > .submenu {
+visibility: visible;
+opacity: 1;
+pointer-events: auto;
+transition-delay: 0s;
+transform: translateX(0);
+}
+/* 面板与子面板之间的横向缓冲 */
+.dropdown-menu li.has-submenu::after {
+content: "";
+position: absolute;
+left: 100%;
+top: 0;
+width: 10px;
+height: 100%;
+z-index: 9998;
+}
+
+/* 桌面端（>=769px）：纯 hover 展开，触发按钮不响应点击 */
+@media (min-width:769px) {
+.dropdown-trigger {
+pointer-events: none;
+}
+}
+
+/* 窄屏桌面（769-1300px）：取消横向飞出，改为面板内纵向展开，避免右侧溢出 */
+@media (min-width:769px) and (max-width:1300px) {
+.dropdown-menu {
+left: auto;
+right: 0;
+}
+.submenu {
+position: static;
+top: auto;
+left: auto;
+width: 100%;
+transform: none;
+visibility: visible;
+opacity: 1;
+pointer-events: auto;
+display: none;
+box-shadow: none;
+border: none;
+border-radius: 0;
+border-left: 2px solid #f1e4da;
+padding: 0 0 4px;
+margin: 0 0 4px 12px;
+transition: none;
+}
+.dropdown-menu li:hover > .submenu {
+display: block;
+}
+.dropdown-menu li.has-submenu::after {
+display: none;
+}
+.submenu a {
+padding: 9px 14px;
+font-size: 0.8rem;
+}
+}
+
+/* ========== 移动端（<=768px）：点击展开 + 纵向手风琴 ========== */
+@media (max-width:768px) {
+.dropdown-trigger {
+pointer-events: auto;
+}
+.dropdown-menu {
+top: calc(100% + 6px);
+left: auto;
+right: 0;
+transform: translateY(6px);
+width: 320px;
+max-width: 88vw;
+}
+.nav-item-dropdown:hover > .dropdown-menu {
+visibility: hidden;
+opacity: 0;
+pointer-events: none;
+}
+.nav-item-dropdown.open > .dropdown-menu {
+visibility: visible;
+opacity: 1;
+pointer-events: auto;
+transform: translateY(0);
+}
+.nav-item-dropdown.open > .dropdown-trigger i {
+transform: rotate(180deg);
+}
+.submenu {
+position: static;
+top: auto;
+left: auto;
+min-width: 0;
+width: auto;
+transform: none;
+visibility: visible;
+opacity: 1;
+pointer-events: auto;
+display: none;
+transition: none;
+background: transparent;
+border: none;
+border-radius: 0;
+box-shadow: none;
+padding: 0;
+margin: 0 0 6px 18px;
+border-left: 2px solid #f1e4da;
+}
+.dropdown-menu li:hover > .submenu {
+display: none;
+}
+.dropdown-menu li.open > .submenu {
+display: block;
+}
+.dropdown-menu li.has-submenu::after {
+display: none;
+}
+.submenu a {
+padding: 9px 14px;
+font-size: 0.82rem;
+}
+.dropdown-menu > li.open > .submenu-trigger i {
+transform: rotate(90deg);
+}
 }
 
 /* 页面头部banner */
@@ -241,9 +408,20 @@ font-weight: 400;
 padding: clamp(3rem, 8vw, 5rem) 0;
 }
 .product-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+display: flex;
+flex-wrap: wrap;
+justify-content: flex-start;
 gap: 28px;
+}
+/* 卡片宽度固定，数量从 1 到 N 都不改变单卡尺寸；换行后每行都从左往右排列 */
+.product-grid > .product-card {
+flex: 0 0 380px;
+max-width: 100%;
+}
+@media (max-width: 640px) {
+.product-grid > .product-card {
+flex-basis: 100%;
+}
 }
 .product-card {
 background:#ffffff;
@@ -700,3 +878,137 @@ height:38px;
 .preview-prev {left:10px;}
 .preview-next {right:10px;}
 }
+
+
+/* ---------- 面包屑 ---------- */
+.breadcrumb {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+gap: 8px;
+font-size: 0.78rem;
+color: #5c6f68;
+margin-bottom: 0.9rem;
+}
+.breadcrumb a {
+color: #8a4b28;
+text-decoration: none;
+font-weight: 500;
+}
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb .crumb-sep { color: #a9b5b0; }
+.breadcrumb .crumb-current { color: #14332a; font-weight: 700; }
+
+/* ---------- 相关产线推荐 ---------- */
+.related-lines { padding: 0 0 clamp(2rem, 5vw, 3rem); }
+.related-head { max-width: 760px; margin: 0 auto 1.4rem; text-align: center; }
+.related-head h2 {
+font-size: clamp(1.15rem, 4vw, 1.5rem);
+color: #14332a;
+margin-bottom: 0.4rem;
+}
+.related-head p { color: #4b5f58; font-size: 0.92rem; }
+.related-grid {
+display: flex;
+flex-wrap: wrap;
+gap: 18px;
+justify-content: flex-start;
+}
+.related-card {
+flex: 1 1 280px;
+max-width: 380px;
+background: #fff;
+border: 1px solid #e3e9e7;
+border-radius: 14px;
+padding: 18px 20px;
+text-decoration: none;
+transition: 0.2s ease;
+}
+.related-card:hover {
+border-color: #c2410c;
+transform: translateY(-2px);
+box-shadow: 0 12px 24px -16px rgba(0, 0, 0, 0.35);
+}
+.related-card h3 { font-size: 0.98rem; color: #14332a; margin-bottom: 0.35rem; }
+.related-card p { font-size: 0.86rem; color: #556862; margin-bottom: 0.6rem; }
+.related-card span { font-size: 0.82rem; color: #c2410c; font-weight: 700; }
+
+/* ---------- 页尾 CTA 带 ---------- */
+.cta-band {
+background: #14332a;
+border-radius: 18px;
+padding: clamp(1.6rem, 4vw, 2.4rem);
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: space-between;
+gap: 1.3rem;
+margin: clamp(1rem, 3vw, 1.6rem) 0 clamp(3rem, 8vw, 4.5rem);
+}
+.cta-band .cta-text { flex: 1 1 360px; }
+.cta-band h2 {
+color: #fff;
+font-size: clamp(1.1rem, 3.2vw, 1.45rem);
+margin-bottom: 0.5rem;
+font-weight: 800;
+}
+.cta-band p { color: #cfdfd5; font-size: 0.92rem; max-width: 640px; }
+.cta-band .cta-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.cta-band .btn-ghost {
+border: 1.5px solid rgba(255,255,255,0.5);
+color: #fff;
+padding: 12px 24px;
+border-radius: 60px;
+text-decoration: none;
+font-weight: 700;
+font-size: 0.9rem;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+transition: 0.2s;
+}
+.cta-band .btn-ghost:hover { background: rgba(255,255,255,0.14); border-color: #fff; }
+
+/* ---------- 内容页（About / FAQ / 政策类） ---------- */
+.content-page .content-wrap { max-width: 880px; margin: 0 auto; }
+.content-page h2 {
+font-size: clamp(1.15rem, 4vw, 1.45rem);
+color: #14332a;
+margin: 2rem 0 0.6rem;
+font-weight: 800;
+}
+.content-page p,
+.content-page li {
+color: #3c4f49;
+font-size: 0.95rem;
+line-height: 1.75;
+}
+.content-page li { margin-bottom: 0.35rem; }
+.content-page ul { padding-left: 1.15rem; margin: 0.4rem 0 1rem; }
+.content-page .faq-item {
+border-bottom: 1px solid #e6ece9;
+padding: 1rem 0;
+}
+.content-page .faq-item h3 {
+font-size: 1rem;
+color: #14332a;
+margin-bottom: 0.4rem;
+font-weight: 700;
+}
+.content-page .info-card {
+background: #fff;
+border: 1px solid #e3e9e7;
+border-radius: 16px;
+padding: 1.4rem 1.6rem;
+margin: 1.2rem 0;
+}
+@media (max-width: 640px) {
+.related-card { flex: 1 1 100%; max-width: 100%; }
+.cta-band .cta-actions { width: 100%; }
+}
+
+/* 修正：相关产线区块嵌在产品容器内，去掉重复内边距 */
+.product-list .related-lines > .container { padding: 0; max-width: none; }
+.product-list .related-lines { padding: 2.2rem 0 0; }
+.product-grid + .related-lines { margin-top: 2.4rem; border-top: 1px dashed #dfe7e4; }

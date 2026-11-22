@@ -121,73 +121,234 @@
             transform: translateY(-2px);
         }
 
-        /* ========== 下拉菜单样式【优化版｜解决鼠标移动丢失菜单】 ========== */
+        /* ========== 产品下拉菜单【支持二级 / 三级｜PC hover + 移动端点击】 ========== */
         .nav-item-dropdown {
             position: relative;
         }
-        /* 透明缓冲层：填补按钮与下拉菜单空隙，鼠标移动不会断开hover */
+        /* 按钮与面板之间的透明缓冲，斜向移动鼠标不会丢hover */
         .nav-item-dropdown::after {
             content: "";
             position: absolute;
             width: 100%;
-            height: 14px;
+            height: 12px;
             left: 0;
             top: 100%;
             z-index: 9998;
         }
-        .dropdown-menu {
+
+        /* 面板基础样式：一级 .dropdown-menu 与多级 .submenu 共用 */
+        .dropdown-menu,
+        .submenu {
+            list-style: none;
+            margin: 0;
+            padding: 10px 0;
+            background: #ffffff;
+            border: 1px solid #e3e9e7;
+            border-radius: 16px;
+            box-shadow: 0 12px 28px rgba(15, 40, 35, 0.12);
+            width: 270px;
             visibility: hidden;
             opacity: 0;
+            pointer-events: none;
+            transition: visibility 0s linear 0.22s, opacity 0.2s ease, transform 0.2s ease;
+            z-index: 9999;
+        }
+
+        /* 一级面板：按钮正下方 */
+        .dropdown-menu {
             position: absolute;
             top: calc(100% + 8px);
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-            min-width: 200px;
-            padding: 10px 0;
-            /* 关键：离开时延迟0.25s隐藏，给用户移动鼠标时间 */
-            transition: visibility 0s linear 0.25s, opacity 0.22s ease;
-            z-index: 9999;
-            pointer-events: none;
+            left: 0;
+            transform: translateY(6px);
         }
-        .dropdown-menu li {
+        .nav-item-dropdown:hover > .dropdown-menu,
+        .nav-item-dropdown.open > .dropdown-menu {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            transition-delay: 0s;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li,
+        .submenu li {
+            position: relative;
             list-style: none;
         }
-        .dropdown-menu a {
+
+        .dropdown-menu a,
+        .submenu a {
             background: transparent;
             color: #1e293b;
             border-radius: 0;
             padding: 10px 20px;
             width: 100%;
             display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            font-weight: 500;
+            white-space: normal;
         }
-        .dropdown-menu a:hover {
+        .dropdown-menu a:hover,
+        .submenu a:hover {
             background-color: #f7ede6;
             color: #c2410c;
             transform: none;
         }
 
-        /* 桌面端hover生效（>=769px） */
-        @media (min-width:769px) {
-            .nav-item-dropdown:hover .dropdown-menu {
-                visibility: visible;
-                opacity: 1;
-                transition-delay: 0s;
-                pointer-events: auto;
-            }
-            /* PC端禁用点击触发，仅hover生效 */
+        /* 分组父项：加重字重 + 右侧箭头 */
+        .submenu-trigger {
+            cursor: default;
+        }
+        .dropdown-menu > li.has-submenu > .submenu-trigger {
+            font-weight: 700;
+            color: #1e3a2f;
+        }
+        .submenu-trigger i {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            transition: transform 0.22s ease;
+        }
+        .dropdown-trigger i {
+            transition: transform 0.22s ease;
+        }
+
+        /* 二级及以下：从面板右侧滑出，可继续无限嵌套 */
+        .submenu {
+            position: absolute;
+            top: -10px;
+            left: calc(100% + 6px);
+            transform: translateX(6px);
+            width: 300px;
+        }
+        .dropdown-menu li:hover > .submenu,
+        .dropdown-menu li.open > .submenu {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+            transition-delay: 0s;
+            transform: translateX(0);
+        }
+        /* 面板与子面板之间的横向缓冲 */
+        .dropdown-menu li.has-submenu::after {
+            content: "";
+            position: absolute;
+            left: 100%;
+            top: 0;
+            width: 10px;
+            height: 100%;
+            z-index: 9998;
+        }
+
+        /* 桌面端（>=769px）：纯 hover 展开，触发按钮不响应点击 */
+        @media (min-width: 769px) {
             .dropdown-trigger {
                 pointer-events: none;
             }
         }
-        /* open类：JS仅移动端点击控制展开 */
-        .nav-item-dropdown.open .dropdown-menu {
-            visibility: visible;
-            opacity: 1;
-            transition-delay: 0s;
-            pointer-events: auto;
+
+        /* 窄屏桌面（769-1300px）：取消横向飞出，改为面板内纵向展开，避免右侧溢出 */
+        @media (min-width: 769px) and (max-width: 1300px) {
+            .dropdown-menu {
+                left: auto;
+                right: 0;
+            }
+            .submenu {
+                position: static;
+                top: auto;
+                left: auto;
+                width: 100%;
+                transform: none;
+                visibility: visible;
+                opacity: 1;
+                pointer-events: auto;
+                display: none;
+                box-shadow: none;
+                border: none;
+                border-radius: 0;
+                border-left: 2px solid #f1e4da;
+                padding: 0 0 4px;
+                margin: 0 0 4px 12px;
+                transition: none;
+            }
+            .dropdown-menu li:hover > .submenu {
+                display: block;
+            }
+            .dropdown-menu li.has-submenu::after {
+                display: none;
+            }
+            .submenu a {
+                padding: 9px 14px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* ========== 移动端（<=768px）：点击展开 + 纵向手风琴 ========== */
+        @media (max-width: 768px) {
+            .dropdown-trigger {
+                pointer-events: auto;
+            }
+            .dropdown-menu {
+                top: calc(100% + 6px);
+                left: auto;
+                right: 0;
+                transform: translateY(6px);
+                width: 320px;
+                max-width: 88vw;
+            }
+            /* 移动端不沿用 hover，避免触摸残留状态 */
+            .nav-item-dropdown:hover > .dropdown-menu {
+                visibility: hidden;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .nav-item-dropdown.open > .dropdown-menu {
+                visibility: visible;
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+            .nav-item-dropdown.open > .dropdown-trigger i {
+                transform: rotate(180deg);
+            }
+            /* 子菜单在面板内纵向展开 */
+            .submenu {
+                position: static;
+                top: auto;
+                left: auto;
+                min-width: 0;
+                width: auto;
+                transform: none;
+                visibility: visible;
+                opacity: 1;
+                pointer-events: auto;
+                display: none;
+                transition: none;
+                background: transparent;
+                border: none;
+                border-radius: 0;
+                box-shadow: none;
+                padding: 0;
+                margin: 0 0 6px 18px;
+                border-left: 2px solid #f1e4da;
+            }
+            .dropdown-menu li:hover > .submenu {
+                display: none;
+            }
+            .dropdown-menu li.open > .submenu {
+                display: block;
+            }
+            .dropdown-menu li.has-submenu::after {
+                display: none;
+            }
+            .submenu a {
+                padding: 9px 0 9px 14px;
+                font-size: 0.82rem;
+            }
+            .dropdown-menu > li.open > .submenu-trigger i {
+                transform: rotate(90deg);
+            }
         }
 
         .contact-btn {
@@ -246,15 +407,6 @@
             .hero-image {
                 order: 2;
                 margin-top: 0.5rem;
-            }
-            /* ❗重要：删除旧代码里 position:static，保持绝对定位，杜绝空白 */
-            .dropdown-menu {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            /* 移动端按钮允许点击 */
-            .dropdown-trigger {
-                pointer-events: auto;
             }
         }
         
@@ -877,7 +1029,7 @@
 <nav class="navbar">
     <div class="container nav-flex">
         <div class="logo">
-            <h1>TRUVIC MACHINERY<span>Heavy Industry & Global Trade</span></h1>
+            <h1>TRUVIC MACHINERY<span>Processing Machinery & Global Trade</span></h1>
         </div>
         <ul class="nav-links">
             <li><a href="#home">HOME</a></li>
@@ -886,11 +1038,28 @@
             <li class="nav-item-dropdown">
                 <a href="#" class="dropdown-trigger"><span>PRODUCTS</span> <i class="fas fa-chevron-down"></i></a>
                 <ul class="dropdown-menu">
-                    <!-- 在这里修改href链接地址 -->
-                    <li><a href="welding-machines.html">Welding Machine</a></li>
+                    <!-- 分组｜Welding & Cutting -->
+                    <li class="has-submenu">
+                        <a href="#" class="submenu-trigger">Welding &amp; Cutting <i class="fas fa-chevron-right"></i></a>
+                        <ul class="submenu">
+                            <li><a href="welding-machines.html">Welding Machine</a></li>
+                            <li><a href="sheet-metal-laser-machine.html">Sheet Metal &amp; Laser Processing</a></li>
+                        </ul>
+                    </li>
+                    <!-- 分组｜Tube & Wire Processing -->
+                    <li class="has-submenu">
+                        <a href="#" class="submenu-trigger">Tube &amp; Wire Processing <i class="fas fa-chevron-right"></i></a>
+                        <ul class="submenu">
+                            <li><a href="fin-tube-processing-machine.html">Fin Tube Processing</a></li>
+                            <li><a href="heat-exchanger-tube-processing-machine.html">Heat Exchanger Tube Processing</a></li>
+                        </ul>
+                    </li>
+                    <!-- 直达项｜transformer-busbar-processing-machine.html -->
+                    <li><a href="transformer-busbar-processing-machine.html">Transformer &amp; Busbar Processing</a></li>
+                    <!-- 直达项｜rim-machinery.html -->
                     <li><a href="rim-machinery.html">Rim Making Machine</a></li>
-                    <li><a href="paper-plastic-machine.html">Paper & Plastic Processing Machine</a></li>
-                    <li><a href="sheet-metal-laser-machine.html">Sheet Metal & Laser Processing Machine</a></li>
+                    <!-- 直达项｜paper-plastic-machine.html -->
+                    <li><a href="paper-plastic-machine.html">Paper &amp; Plastic Processing Machine</a></li>
                 </ul>
             </li>
             <li><a href="#global">GLOBAL NETWORK</a></li>
@@ -903,30 +1072,36 @@
 <section id="home" class="hero">
     <div class="container hero-grid">
         <div class="hero-content">
-            <div class="hero-badge"><i class="fas fa-industry"></i> Heavy Machinery Export Leader</div>
-            <h1>Powering Global Infrastructure,<br>“Made in China” Machinery for World</h1>
-            <p>From construction equipment to industrial processing lines, we deliver turnkey machinery solutions, spare parts, and after-sales support across 5 continents.</p>
+            <div class="hero-badge"><i class="fas fa-industry"></i> Factory-Direct Processing Machinery</div>
+            <h1>Industrial Processing Machinery,<br>Straight from China’s Factories</h1>
+            <p>Welding &amp; cutting, tube &amp; wire, transformer core, wheel rim and paper &amp; plastic processing lines — with technical selection, factory pricing, spare parts and one English-speaking engineer from inquiry to delivery.</p>
             <div class="hero-buttons">
-                <a href="#contact-form" class="btn-primary">Get Machinery Quote <i class="fas fa-arrow-right"></i></a>
-                <a href="#services" class="btn-outline">Explore Solutions</a>
+                <a href="#contact-form" class="btn-primary">Request a Technical Quote <i class="fas fa-arrow-right"></i></a>
+                <a href="#product-lines" class="btn-outline">View Machine Lines</a>
             </div>
         </div>
         <div class="hero-image">
             <!-- 重点：手机端图片会位于文字下方 (flex列向排列 + order 保证) -->
-            <img src="./image/mainpage/homepage1.png" alt="Global Machinery Trade Network" loading="lazy">
+            <picture>
+                <source srcset="./image/mainpage/homepage1.webp" type="image/webp">
+                <img src="./image/mainpage/homepage1.png" alt="Robotic arm in an automated machinery production line" width="2992" height="1576" fetchpriority="high">
+            </picture>
         </div>
     </div>
 </section>
 
-<div class="trust-bar">
+<div class="trust-bar" id="product-lines">
     <div class="container">
-        <div class="trust-text">TRUSTED BY TOP MACHINERY BRANDS & MINING GROUPS</div>
-        <!-- <div class="logo-cloud">
-            <span class="brand-item"><i class="fas fa-tractor"></i> Caterpillar Partner</span>
-            <span class="brand-item"><i class="fas fa-hard-hat"></i> SANY Group</span>
-            <span class="brand-item"><i class="fas fa-crane"></i> Liebherr Supply</span>
-            <span class="brand-item"><i class="fas fa-gears"></i> Komatsu Global</span>
-        </div> -->
+        <div class="trust-text">SEVEN PROCESSING LINES · 30+ MACHINE MODELS · FACTORY-DIRECT PRICING</div>
+        <div class="logo-cloud">
+            <a class="brand-item" style="text-decoration:none" href="welding-machines.html"><i class="fas fa-bolt"></i> Welding Machines</a>
+            <a class="brand-item" style="text-decoration:none" href="sheet-metal-laser-machine.html"><i class="fas fa-compress"></i> Sheet Metal &amp; Laser</a>
+            <a class="brand-item" style="text-decoration:none" href="fin-tube-processing-machine.html"><i class="fas fa-temperature-low"></i> Fin Tube</a>
+            <a class="brand-item" style="text-decoration:none" href="heat-exchanger-tube-processing-machine.html"><i class="fas fa-wind"></i> Heat Exchanger Tube</a>
+            <a class="brand-item" style="text-decoration:none" href="transformer-busbar-processing-machine.html"><i class="fas fa-bolt-lightning"></i> Transformer &amp; Busbar</a>
+            <a class="brand-item" style="text-decoration:none" href="rim-machinery.html"><i class="fas fa-circle-notch"></i> Rim Making</a>
+            <a class="brand-item" style="text-decoration:none" href="paper-plastic-machine.html"><i class="fas fa-box"></i> Paper &amp; Plastic</a>
+        </div>
     </div>
 </div>
 
@@ -934,31 +1109,31 @@
     <div class="container">
         <div class="section-header">
             <h2>One-Stop Machinery Foreign Trade Solutions</h2>
-            <p>End-to-end from sourcing heavy equipment to logistics, installation & training — reduce industrial procurement risks</p>
+            <p>Sourcing, export logistics, commissioning and after-sales support for industrial processing machinery — we deliver a working line, not just a machine.</p>
         </div>
         <div class="cards-grid">
             <div class="service-card">
                 <div class="service-icon"><i class="fas fa-cogs"></i></div>
                 <h3>Industrial Sourcing Agent</h3>
-                <p>Supplier auditing, quality control for construction machinery, excavators, loaders, and industrial parts with ISO/CE certification.</p>
+                <p>We audit and qualify the Chinese factories behind each machine line — build quality, safety guarding, electrical standard and ISO/CE documentation — before you place a PO.</p>
                 <!-- <a href="#" class="more-link">Learn More →</a> -->
             </div>
             <div class="service-card">
                 <div class="service-icon"><i class="fas fa-ship"></i></div>
                 <h3>Heavy Lift Logistics & Customs</h3>
-                <p>Breakbulk shipping, RO-RO transport, project cargo clearance, real-time tracking for oversized machinery.</p>
+                <p>Breakbulk, RO-RO and 40HQ loading plans, export clearance and door-to-door tracking for mills, coil lines and paper converting equipment.</p>
                 <!-- <a href="#" class="more-link">Learn More →</a> -->
             </div>
             <div class="service-card">
                 <div class="service-icon"><i class="fas fa-chalkboard-user"></i></div>
                 <h3>Technical Service & Training</h3>
-                <p>On-site commissioning, operator training, and remote troubleshooting for mining & construction equipment.</p>
+                <p>Remote commissioning, English manuals, operator training videos and a spare-parts list for every machine we ship.</p>
                 <!-- <a href="#" class="more-link">Learn More →</a> -->
             </div>
             <div class="service-card">
                 <div class="service-icon"><i class="fas fa-chart-line"></i></div>
                 <h3>Export Marketing & Financing</h3>
-                <p>Letter of credit negotiation, export credit insurance, and targeted B2B marketing for heavy equipment overseas.</p>
+                <p>T/T and L/C terms, complete export documentation, and one English-speaking engineer as your contact from inquiry to delivery.</p>
                 <!-- <a href="#" class="more-link">Learn More →</a> -->
             </div>
         </div>
@@ -967,10 +1142,10 @@
 
 <section class="stats">
     <div class="container stats-grid">
-        <div class="stat-item"><h3>110+</h3><p>Countries Served</p></div>
-        <div class="stat-item"><h3>$3.2B</h3><p>Machinery Trade Volume</p></div>
-        <div class="stat-item"><h3>450+</h3><p>Industry Partners</p></div>
-        <div class="stat-item"><h3>99%</h3><p>On-time Delivery Rate</p></div>
+        <div class="stat-item"><h3>7</h3><p>Processing Lines</p></div>
+        <div class="stat-item"><h3>30+</h3><p>Machine Models</p></div>
+        <div class="stat-item"><h3>&lt;24h</h3><p>Quote Response</p></div>
+        <div class="stat-item"><h3>100%</h3><p>Factory-Direct Supply</p></div>
     </div>
 </section>
 
@@ -981,13 +1156,13 @@
 <section id="global" class="global-cta">
     <div class="container global-flex">
         <div class="global-text">
-            <h2>Global Machinery Hub · Local Support</h2>
-            <p>With regional hubs in Shanghai, Dubai, Houston, and Rotterdam, our machinery experts provide 24/7 technical assistance. From mining projects in Africa to infrastructure in Southeast Asia, Leading Machinery ensures zero downtime.</p>
+            <h2>Based in Shanghai · Shipping Worldwide</h2>
+            <p>Our sourcing and QC team works next to the machine builders in Shanghai, Jiangsu and Zhejiang, so every line is inspected before it is crated. Each inquiry gets a technical reply within one business day — Mon–Fri, 9:00–18:00 GMT+8.</p>
             <div class="contact-details" id="contact">
                 <p><i class="fas fa-map-marker-alt" style="color:#c2410c"></i> Machinery Headquarters: No.778 Siping Road, Hongkou District, Shanghai, China</p>
                 <p><i class="fas fa-phone-alt"></i> Hotline: +86 153 0077 7917</p>
                 <p><i class="fas fa-envelope"></i> Email: teweike@foxmail.com</p>
-                <p><i class="fas fa-clock"></i> 24/7 After-sales Support</p>
+                <p><i class="fas fa-clock"></i> Reply within 1 business day · Mon–Fri 9:00–18:00 GMT+8</p>
             </div>
             <!-- 按钮修改：增加 id 触发弹窗 -->
             <div style="margin-top: 28px;">
@@ -997,7 +1172,10 @@
         <!-- 【已修改】右侧替换为YouTube频道跳转封面 -->
         <div class="global-map">
             <a href="https://www.youtube.com/@WyattWang-TWK" target="_blank" rel="noopener noreferrer" class="youtube-cover-link" style="display:block;width:100%;height:100%;position:relative;">
-                <img src="./image/mainpage/homepage2.jpg" alt="YouTube Machinery Channel" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+                <picture>
+                    <source srcset="./image/mainpage/homepage2.webp" type="image/webp">
+                    <img src="./image/mainpage/homepage2.jpg" alt="YouTube Machinery Channel" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+                </picture>
                 <!-- 渐变遮罩文字 -->
                 <div style="position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.25) 50%);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;">
                     <i class="fab fa-youtube" style="font-size:52px;color:#ff0000;"></i>
@@ -1013,7 +1191,7 @@
     <div class="container">
         <div class="section-header">
             <h2>Request for Machinery & Technical Quotation</h2>
-            <p>Fill in your project details — our mechanical engineer will reply within 12 hours</p>
+            <p>Fill in your project details — an English-speaking engineer replies within 1 business day (Mon–Fri, 9:00–18:00 GMT+8)</p>
         </div>
         <div class="form-card">
             <!-- formsubmit 表单 -->
@@ -1024,23 +1202,38 @@
                 <input type="hidden" name="_template" value="table">
                 <input type="hidden" name="_redirect" value="">
 
+                <div id="rfqSelectedMachine" style="display:none;margin:0 0 1rem;padding:10px 16px;border-radius:10px;background:#fff3e9;color:#7c2d12;font-size:0.85rem;">
+                    Selected machine: <strong id="rfqSelectedMachineName"></strong>
+                </div>
                 <div class="form-grid">
                     <input type="text" name="Full Name / Company" placeholder="Full Name / Company" required>
                     <input type="email" name="Business Email" placeholder="Business Email" required>
                     <input type="tel" name="Phone / WhatsApp" placeholder="Phone / WhatsApp">
+                    <input type="text" name="Country / Destination Port" placeholder="Country / Destination Port" required>
                     <select name="Equipment Type">
                         <option value="">Machine Type</option>
                         <option>Welding Machine</option>
+                        <option>Sheet Metal & Laser Processing</option>
+                        <option>Tube & Wire Processing</option>
+                        <option>Fin Tube Processing</option>
+                        <option>Heat Exchanger Tube Processing</option>
+                        <option>Transformer & Busbar Processing</option>
                         <option>Rim Making Machine</option>
                         <option>Paper & Plastic Processing Machine</option>
-                        <!--<option>Crushers / Screen Plants</option> -->
-                        <option>sheet-metal&laser-machine</option>
+                    </select>
+                    <input type="text" name="Quantity / Capacity" placeholder="Quantity / Capacity">
+                    <select name="Purchase Timeline">
+                        <option value="">Purchase Timeline</option>
+                        <option>Immediately</option>
+                        <option>Within 1–3 months</option>
+                        <option>Within 3–6 months</option>
+                        <option>Budgeting / Information only</option>
                     </select>
                 </div>
                 <textarea name="Project Details" rows="3" placeholder="Tell us about your project: capacity, destination country, required technical specs..." style="width:100%; margin-top: 1.2rem;"></textarea>
                 <div style="text-align:center; margin-top: 1.8rem;">
                     <button id="submitRfqBtn" type="submit" class="btn-primary" style="cursor:pointer; border:none;">Send RFQ <i class="fas fa-paper-plane"></i></button>
-                    <p style="font-size: 0.7rem; margin-top: 1rem; color:#5f6c64;">Your data is protected. We specialize in heavy machinery global trade.</p>
+                    <p style="font-size: 0.7rem; margin-top: 1rem; color:#5f6c64;">Your details stay with our sales engineer only. Reply within 1 business day, Mon–Fri 9:00–18:00 GMT+8.</p>
                 </div>
             </form>
         </div>
@@ -1051,7 +1244,7 @@
 <div class="success-modal" id="rfqSuccessModal">
     <div class="success-modal-box">
         <h3>✅ RFQ Sent Successfully!</h3>
-        <p>Thank you for your inquiry.<br>Our mechanical engineer will review your request and reply within 12 hours.</p>
+        <p>Thank you for your inquiry.<br>An English-speaking engineer will review your request and reply within 1 business day (Mon–Fri 9:00–18:00 GMT+8).</p>
         <button class="success-modal-close" id="closeSuccessModal">OK</button>
     </div>
 </div>
@@ -1059,12 +1252,12 @@
 <footer class="footer">
     <div class="container">
         <div class="footer-grid">
-            <div class="footer-col"><h4>TRUVIC Machinery</h4><p>Heavy equipment supply chain specialists, delivering reliable machinery solutions for global industrial contractors.</p><div class="social-icons"><i class="fab fa-linkedin-in"></i><i class="fab fa-facebook-f"></i><i class="fab fa-youtube"></i><i class="fab fa-weixin"></i></div></div>
-            <div class="footer-col"><h4>Quick Support</h4><ul><li><a href="#">Technical Documents</a></li><li><a href="#">Machine Manuals</a></li><li><a href="#">Project Cases</a></li><li><a href="#">Service Network</a></li></ul></div>
-            <div class="footer-col"><h4>Resources</h4><ul><li><a href="#">Spare Parts Catalog</a></li><li><a href="#">Export Compliance</a></li><li><a href="#">Shipping & Logistics</a></li><li><a href="#">Trade Financing</a></li></ul></div>
-            <div class="footer-col"><h4>Legal</h4><ul><li><a href="#">Warranty Policy</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Export Terms</a></li></ul></div>
-        </div>
-        <div class="copyright"><p>© 2026 TRUVIC Machinery International Co., Ltd. | Heavy Equipment Foreign Trade Specialist | All Rights Reserved</p></div>
+<div class="footer-col"><h4>TRUVIC Machinery</h4><p>Shanghai-based supplier of processing machinery: welding, sheet metal, tube, transformer, rim and packaging lines. Factory-direct prices, export documents and spare parts from one contact.</p><div class="social-icons"><i class="fab fa-linkedin-in"></i><i class="fab fa-facebook-f"></i><i class="fab fa-youtube"></i><i class="fab fa-weixin"></i></div></div>
+<div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="faq.html">FAQ</a></li><li><a href="index.html#services">How We Work</a></li></ul></div>
+<div class="footer-col"><h4>Machine Lines</h4><ul><li><a href="welding-machines.html">Welding &amp; Cutting</a></li><li><a href="sheet-metal-laser-machine.html">Sheet Metal &amp; Laser</a></li><li><a href="fin-tube-processing-machine.html">Fin Tube Processing</a></li><li><a href="heat-exchanger-tube-processing-machine.html">Heat Exchanger Tube</a></li><li><a href="transformer-busbar-processing-machine.html">Transformer &amp; Busbar</a></li><li><a href="rim-machinery.html">Rim Making Machine</a></li><li><a href="paper-plastic-machine.html">Paper &amp; Plastic</a></li></ul></div>
+<div class="footer-col"><h4>Support &amp; Legal</h4><ul><li><a href="support.html#warranty">Warranty &amp; Spare Parts</a></li><li><a href="support.html#shipping">Shipping &amp; Packing</a></li><li><a href="support.html#documents">Export Documents</a></li><li><a href="privacy.html">Privacy Policy</a></li><li><a href="terms.html">Terms of Sale</a></li></ul></div>
+</div>
+<div class="copyright"><p>© <span id="footerYear">2026</span> TRUVIC Machinery International Co., Ltd. | Processing Machinery · Shanghai, China | All Rights Reserved</p></div>
     </div>
 </footer>
 
@@ -1117,42 +1310,49 @@
             });
         });
 
-        // ========== Products下拉菜单【新版逻辑｜PC hover / Mobile Click】 ==========
+        // ========== Products 下拉菜单【PC hover / 移动端点击｜支持二级/三级】 ==========
         const BREAKPOINT = 768;
-        const dropdownTrigger = document.querySelector('.dropdown-trigger');
         const dropdownWrap = document.querySelector('.nav-item-dropdown');
-        const menu = document.querySelector('.dropdown-menu');
+        const dropdownTrigger = dropdownWrap ? dropdownWrap.querySelector('.dropdown-trigger') : null;
+        const subTriggers = dropdownWrap ? dropdownWrap.querySelectorAll('.submenu-trigger') : [];
 
-        function closeMenu() {
+        function closeAllPanels() {
+            if (!dropdownWrap) return;
             dropdownWrap.classList.remove('open');
+            dropdownWrap.querySelectorAll('li.open').forEach(li => li.classList.remove('open'));
         }
-        function toggleMenu(e) {
+
+        function onTriggerClick(e) {
             e.preventDefault();
             e.stopPropagation();
-            dropdownWrap.classList.toggle('open');
+            if (window.innerWidth > BREAKPOINT) return; // PC 端交给 CSS hover
+            const opened = dropdownWrap.classList.toggle('open');
+            if (!opened) closeAllPanels();
         }
 
-        // 事件挂载控制器
-        function bindDropdownEvents() {
-            // 移除旧事件，防止重复绑定
-            dropdownTrigger.removeEventListener('click', toggleMenu);
-            document.removeEventListener('click', closeMenu);
-            menu.removeEventListener('click', e => e.stopPropagation());
-
-            if (window.innerWidth <= BREAKPOINT) {
-                // 移动端启用点击逻辑
-                dropdownTrigger.addEventListener('click', toggleMenu);
-                document.addEventListener('click', closeMenu);
-                menu.addEventListener('click', e => e.stopPropagation());
-            } else {
-                // PC端：交给CSS hover，强制关闭打开状态
-                closeMenu();
-            }
+        function onSubTriggerClick(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (window.innerWidth > BREAKPOINT) return; // PC 端交给 CSS hover
+            const li = e.currentTarget.parentElement;
+            const opened = li.classList.toggle('open');
+            // 同级分组只保留一个展开
+            Array.from(li.parentElement.children).forEach(sib => {
+                if (sib !== li && sib.classList) sib.classList.remove('open');
+            });
+            if (!opened) li.classList.remove('open');
         }
-        // 初始化
-        bindDropdownEvents();
-        // 窗口大小变化时重新判断
-        window.addEventListener('resize', bindDropdownEvents);
+
+        if (dropdownTrigger) {
+            dropdownTrigger.addEventListener('click', onTriggerClick);
+            subTriggers.forEach(t => t.addEventListener('click', onSubTriggerClick));
+            document.addEventListener('click', function (e) {
+                if (!e.target.closest('.nav-item-dropdown')) closeAllPanels();
+            });
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > BREAKPOINT) closeAllPanels();
+            });
+        }
 
 
         // ========== RFQ表单 formsubmit 逻辑 ==========
@@ -1237,5 +1437,47 @@
 
     })();
 </script>
+
+<!-- 常驻 WhatsApp 浮窗 -->
+<a class="wa-float" href="https://wa.me/8615300777917" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+<i class="fab fa-whatsapp"></i><span>Chat on WhatsApp</span>
+</a>
+<style>
+.wa-float{position:fixed;right:18px;bottom:18px;z-index:9999;display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:11px 18px;border-radius:40px;text-decoration:none;font-weight:700;font-size:.88rem;box-shadow:0 10px 22px -8px rgba(0,0,0,.4);transition:.2s;}
+.wa-float:hover{background:#1ebe57;transform:translateY(-2px);}
+@media(max-width:640px){.wa-float{right:14px;bottom:14px;padding:13px;border-radius:50%;}.wa-float span{display:none;}}
+</style>
+<script>
+document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new Date().getFullYear();});
+</script>
+
+
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var machine = q.get("machine");
+  var line = q.get("line");
+
+  if (machine) {
+    var box = document.getElementById("rfqSelectedMachine");
+    var nm = document.getElementById("rfqSelectedMachineName");
+    if (box && nm) { nm.textContent = machine; box.style.display = "block"; }
+    var subj = document.querySelector('#rfqForm input[name="_subject"]');
+    if (subj) subj.value = "RFQ - " + machine;
+    var detail = document.querySelector('#rfqForm textarea[name="Project Details"]');
+    if (detail && !detail.value) detail.value = "Machine: " + machine + "\n";
+  }
+
+  if (line) {
+    var sel = document.querySelector('#rfqForm select[name="Equipment Type"]');
+    if (sel) {
+      for (var i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].text.trim() === line.trim()) { sel.selectedIndex = i; break; }
+      }
+    }
+  }
+})();
+</script>
+
 </body>
 </html>

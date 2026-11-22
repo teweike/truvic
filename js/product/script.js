@@ -1,4 +1,7 @@
 // 弹窗图集（淡入淡出 + 懒加载 + spinning loader + 16:9 统一容器）
+// WebP 优先：支持的浏览器自动换用同名 .webp（体积约为 PNG 的 1/10），老浏览器回落原图
+const WEBP_OK = (function(){try{return document.createElement('canvas').toDataURL('image/webp').indexOf('webp') > -1;}catch(e){return false;}})();
+function webpOf(u){ return WEBP_OK ? String(u).replace(/\.(png|jpe?g)$/i, '.webp') : u; }
 const modal = document.getElementById('productModal');
 const sliderTrack = document.getElementById('sliderTrack');
 const sliderDots = document.getElementById('sliderDots');
@@ -30,7 +33,7 @@ if (entry.isIntersecting) {
 const imgWrap = entry.target;
 const img = imgWrap.querySelector('.lazy-img');
 const loader = imgWrap.querySelector('.img-loader');
-const realSrc = img.dataset.lazy;
+const realSrc = webpOf(img.dataset.lazy);
 if (!realSrc) return;
 
 const tempImg = new Image();
@@ -214,6 +217,12 @@ const raw = card.dataset.gallery || '';
 const imgs = raw.split(',').map(s=>s.trim()).filter(s=>s);
 modalTitle.textContent = card.dataset.title;
 modalDesc.textContent = card.dataset.desc;
+const quoteBtn = document.getElementById("modalQuoteBtn");
+if (quoteBtn) {
+const pageLine = document.body.dataset.line || "";
+quoteBtn.href = "index.html?machine=" + encodeURIComponent(card.dataset.title || "")
++ (pageLine ? "&line=" + encodeURIComponent(pageLine) : "") + "#contact-form";
+}
 renderSlider(imgs);
 modal.classList.add('active');
 document.body.style.overflow = 'hidden';
@@ -339,36 +348,48 @@ behavior: 'smooth'
 })
 })
 
-// 下拉菜单
-const DROPDOWN_BREAKPOINT = 769;
-const trigger = document.querySelector('.dropdown-trigger');
-const menu = document.querySelector('.dropdown-menu');
-let isMobileMode = window.innerWidth < DROPDOWN_BREAKPOINT;
+// ========== 下拉菜单（PC hover / 移动端点击｜支持二级、三级）==========
+const DROPDOWN_BREAKPOINT = 768;
+const dropdownWrap = document.querySelector('.nav-item-dropdown');
+const dropdownTrigger = dropdownWrap ? dropdownWrap.querySelector('.dropdown-trigger') : null;
+const subTriggers = dropdownWrap ? dropdownWrap.querySelectorAll('.submenu-trigger') : [];
 
-function toggleDropdown() {
-menu.classList.toggle('open');
-}
-function closeDropdown() {
-menu.classList.remove('open');
+function closeAllPanels() {
+	if (!dropdownWrap) return;
+	dropdownWrap.classList.remove('open');
+	dropdownWrap.querySelectorAll('li.open').forEach(li => li.classList.remove('open'));
 }
 
-trigger.addEventListener('click', function(e){
-e.preventDefault();
-toggleDropdown();
-});
-
-document.addEventListener('click', function(e){
-if(!e.target.closest('.nav-item-dropdown')){
-closeDropdown();
+function onTriggerClick(e) {
+	e.preventDefault();
+	e.stopPropagation();
+	if (window.innerWidth > DROPDOWN_BREAKPOINT) return; // PC 端交给 CSS hover
+	const opened = dropdownWrap.classList.toggle('open');
+	if (!opened) closeAllPanels();
 }
-});
 
-window.addEventListener('resize', function(){
-const newMobile = window.innerWidth < DROPDOWN_BREAKPOINT;
-if(newMobile !== isMobileMode){
-isMobileMode = newMobile;
-closeDropdown();
+function onSubTriggerClick(e) {
+	e.preventDefault();
+	e.stopPropagation();
+	if (window.innerWidth > DROPDOWN_BREAKPOINT) return; // PC 端交给 CSS hover
+	const li = e.currentTarget.parentElement;
+	const opened = li.classList.toggle('open');
+	// 同级分组只保留一个展开
+	Array.from(li.parentElement.children).forEach(sib => {
+		if (sib !== li && sib.classList) sib.classList.remove('open');
+	});
+	if (!opened) li.classList.remove('open');
 }
-});
+
+if (dropdownTrigger) {
+	dropdownTrigger.addEventListener('click', onTriggerClick);
+	subTriggers.forEach(t => t.addEventListener('click', onSubTriggerClick));
+	document.addEventListener('click', function (e) {
+		if (!e.target.closest('.nav-item-dropdown')) closeAllPanels();
+	});
+	window.addEventListener('resize', function () {
+		if (window.innerWidth > DROPDOWN_BREAKPOINT) closeAllPanels();
+	});
+}
 
 window.addEventListener('DOMContentLoaded', initLazyImages);
