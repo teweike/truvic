@@ -96,8 +96,8 @@ def section_html(d):
 def build():
     chips = "\n".join(
         '<a class="line-chip" href="%s"><i class="fas %s"></i>%s</a>'
-        % (d["file"], icon, html.escape(short))
-        for d, (_, short, icon) in zip(DATA, LINES))
+        % (d["file"], icon, html.escape(d["name"]))
+        for d, (_, _short, icon) in zip(DATA, LINES))
 
     listing = (
         '<section class="product-list all-products-list">\n'
@@ -108,17 +108,16 @@ def build():
     )
 
     shell = open(os.path.join(ROOT, "paper-plastic-machine.html")).read()
-    shell = shell.replace(
-        "<title>Paper & Plastic Processing Machine | Machinery</title>",
-        "<title>All Processing Machinery | TRUVIC MACHINERY</title>")
-    shell = shell.replace(
-        '<body data-line="Paper & Plastic Processing Machine">',
-        '<body data-line="All Products">')
+    shell = re.sub(r'<title>.*?</title>', '<title>All Processing Machinery | TRUVIC MACHINERY</title>', shell, count=1)
+    shell = re.sub(r'<body data-line="[^"]*">', '<body data-line="All Products">', shell, count=1)
     shell = re.sub(r'<section class="page-banner">.*?</section>',
                    lambda m: BANNER, shell, count=1, flags=re.S)
     head, rest = shell.split('<section class="product-list">', 1)
     rest = rest.split('<div class="cta-band">', 1)
     shell = head + listing + '\n<div class="cta-band">' + rest[1]
+    # 该页 CTA 不预选具体产线：清掉从纸塑模板继承来的 line 参数
+    shell = shell.replace("index.html?line=Paper%20%26%20Plastic%20Processing%20Machinery#contact-form",
+                          "index.html#contact-form")
 
     open(os.path.join(ROOT, "all-products.html"), "w").write(shell)
     print("已生成 all-products.html ; 卡片数：", {d["name"]: d["n"] for d in DATA})
