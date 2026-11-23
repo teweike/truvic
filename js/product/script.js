@@ -219,7 +219,9 @@ modalTitle.textContent = card.dataset.title;
 modalDesc.textContent = card.dataset.desc;
 const quoteBtn = document.getElementById("modalQuoteBtn");
 if (quoteBtn) {
-const pageLine = document.body.dataset.line || "";
+// 多产线总览页：优先取卡片所在区块的 data-line，单产线页回落 body
+const sectionLine = card.closest('.product-section') ? (card.closest('.product-section').dataset.line || "") : "";
+const pageLine = sectionLine || document.body.dataset.line || "";
 quoteBtn.href = "index.html?machine=" + encodeURIComponent(card.dataset.title || "")
 + (pageLine ? "&line=" + encodeURIComponent(pageLine) : "") + "#contact-form";
 }
@@ -352,20 +354,27 @@ behavior: 'smooth'
 const DROPDOWN_BREAKPOINT = 768;
 const dropdownWrap = document.querySelector('.nav-item-dropdown');
 const dropdownTrigger = dropdownWrap ? dropdownWrap.querySelector('.dropdown-trigger') : null;
+const dropdownCaret = dropdownWrap ? dropdownWrap.querySelector('.dropdown-caret') : null;
 const subTriggers = dropdownWrap ? dropdownWrap.querySelectorAll('.submenu-trigger') : [];
 
 function closeAllPanels() {
 	if (!dropdownWrap) return;
 	dropdownWrap.classList.remove('open');
 	dropdownWrap.querySelectorAll('li.open').forEach(li => li.classList.remove('open'));
+	if (typeof syncCaretState === 'function') syncCaretState();
 }
 
-function onTriggerClick(e) {
+// 只有右侧小箭头负责展开/收起，PRODUCTS 文字是正常链接（跳 All Products 页）
+function onCaretClick(e) {
 	e.preventDefault();
 	e.stopPropagation();
-	if (window.innerWidth > DROPDOWN_BREAKPOINT) return; // PC 端交给 CSS hover
 	const opened = dropdownWrap.classList.toggle('open');
 	if (!opened) closeAllPanels();
+	syncCaretState();
+}
+
+function syncCaretState() {
+	if (dropdownCaret) dropdownCaret.setAttribute('aria-expanded', dropdownWrap.classList.contains('open') ? 'true' : 'false');
 }
 
 function onSubTriggerClick(e) {
@@ -382,7 +391,7 @@ function onSubTriggerClick(e) {
 }
 
 if (dropdownTrigger) {
-	dropdownTrigger.addEventListener('click', onTriggerClick);
+	if (dropdownCaret) dropdownCaret.addEventListener('click', onCaretClick);
 	subTriggers.forEach(t => t.addEventListener('click', onSubTriggerClick));
 	document.addEventListener('click', function (e) {
 		if (!e.target.closest('.nav-item-dropdown')) closeAllPanels();

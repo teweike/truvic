@@ -152,6 +152,46 @@ background-color: #9a3412;
 transform: translateY(-2px);
 }
 
+
+/* ========== PRODUCTS 分裂按钮：文字跳转 + 箭头展开 ========== */
+.nav-item-dropdown {
+display: flex;
+align-items: center;
+background: #b53a17;
+border-radius: 40px;
+padding: 0;
+}
+.nav-item-dropdown .dropdown-trigger {
+background: transparent;
+border-radius: 40px 0 0 40px;
+padding-right: 6px;
+}
+.nav-item-dropdown .dropdown-trigger:hover {
+background: transparent;
+transform: none;
+box-shadow: none;
+color: #fff;
+opacity: .92;
+}
+.dropdown-caret {
+border: 0;
+background: transparent;
+color: #fff;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+padding: 7px 12px 7px 6px;
+border-radius: 0 40px 40px 0;
+line-height: 1;
+transition: background .2s ease;
+}
+.dropdown-caret:hover { background: rgba(255,255,255,.14); }
+.dropdown-caret i { font-size: .72rem; transition: transform .25s ease; }
+.nav-item-dropdown.open .dropdown-caret i { transform: rotate(180deg); }
+@media (max-width:768px) {
+.nav-item-dropdown { align-self: center; }
+}
 /* ========== 产品下拉菜单（支持二级 / 三级｜PC hover + 移动端点击） ========== */
 .nav-item-dropdown {
 position: relative;
@@ -275,8 +315,9 @@ z-index: 9998;
 
 /* 桌面端（>=769px）：纯 hover 展开，触发按钮不响应点击 */
 @media (min-width:769px) {
+/* 文字链可点击（跳 All Products 页），展开改由右侧小箭头负责；hover 仍由 CSS 展开 */
 .dropdown-trigger {
-pointer-events: none;
+pointer-events: auto;
 }
 }
 
@@ -1019,3 +1060,82 @@ margin: 1.2rem 0;
 .product-list .related-lines > .container { padding: 0; max-width: none; }
 .product-list .related-lines { padding: 2.2rem 0 0; }
 .product-grid + .related-lines { margin-top: 2.4rem; border-top: 1px dashed #dfe7e4; }
+
+/* ========== All Products 总览页（多产线聚合） ========== */
+.all-banner h1 { margin-bottom: 0; }
+.line-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 0.5rem;
+}
+.line-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 9px 17px;
+    border-radius: 40px;
+    background: #fff;
+    border: 1px solid #e3e9e7;
+    color: #14332a;
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(20, 51, 42, .05);
+    transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.line-chip i { color: #c2410c; font-size: 0.86rem; transition: color .2s ease; }
+.line-chip:hover {
+    background: #14332a;
+    border-color: #14332a;
+    color: #fff;
+    transform: translateY(-2px);
+}
+.line-chip:hover i { color: #fff; }
+
+.product-section { padding: 2.6rem 0 0; }
+.product-section:first-of-type { padding-top: 1.6rem; }
+.product-section .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.product-section .section-head h2 {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.1rem, 2.2vw, 1.42rem);
+    color: #14332a;
+    letter-spacing: -0.01em;
+}
+.product-section .section-desc {
+    margin: 0;
+    max-width: 60ch;
+    color: #5b6b66;
+    font-size: 0.92rem;
+    line-height: 1.6;
+}
+.section-link {
+    color: #b3491a;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.section-link i { font-size: 0.78rem; transition: transform .2s ease; }
+.section-link:hover { text-decoration: underline; }
+.section-link:hover i { transform: translateX(3px); }
+.all-products-list { padding-bottom: clamp(2.4rem, 6vw, 3.6rem); }
+
+@media (max-width: 768px) {
+    .product-section { padding-top: 2rem; }
+    .product-section .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .line-chip { font-size: 0.8rem; padding: 8px 14px; }
+}
