@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /_tools/
+Disallow: /js/product/script.js
+
+Sitemap: https://teweikemachine.com/sitemap.xml
