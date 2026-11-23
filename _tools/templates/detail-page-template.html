@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product Detail Page Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+:root{
+ --green:#14332a; --green2:#1c4a3c; --orange:#c2410c; --orange-l:#b3491a;
+ --ink:#1e293b; --muted:#5b6b66; --line:#e3e9e7; --box:#eef2f5; --paper:#fafcfb;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:78px;gap:24px}
+.logo{display:flex;flex-direction:column;line-height:1.05}
+.logo b{font-size:26px;font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,#133a30,#c4451c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo span{font-size:10.5px;font-weight:600;color:var(--orange);background:#fff1ed;border-radius:40px;padding:2px 9px;margin-top:5px;width:max-content}
+.navlinks{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.4px}
+.navlinks a{color:var(--green);text-decoration:none;padding:9px 16px;border-radius:40px}
+.navlinks a.active{background:var(--green);color:#fff}
+.navlinks a.cta{background:var(--orange);color:#fff}
+.navlinks a.cta i{margin-right:6px}
+
+/* ---------- breadcrumb ---------- */
+.crumb{padding:26px 0 6px;font-size:13px;color:var(--muted)}
+.crumb a{color:var(--orange);text-decoration:none;font-weight:600}
+.crumb span.sep{color:#b9c2bf;margin:0 9px}
+.crumb .cur{color:var(--green);font-weight:700}
+
+/* ---------- hero ---------- */
+.hero{padding:14px 0 46px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:start}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:1.4px;color:var(--orange);background:#fff1ed;border-radius:40px;padding:7px 14px;margin-bottom:18px}
+h1{font-size:42px;line-height:1.12;letter-spacing:-.02em;color:var(--green);font-weight:800;margin-bottom:16px}
+.lead{font-size:15.5px;line-height:1.72;color:var(--muted);text-align:justify;margin-bottom:22px}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:26px}
+.chip{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:var(--green);background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.chip i{color:var(--orange);font-size:12px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:700;text-decoration:none;padding:14px 22px;border-radius:44px}
+.btn-main{background:var(--orange);color:#fff;box-shadow:0 12px 24px -14px rgba(194,65,12,.75)}
+.btn-ghost{background:#fff;color:var(--green);border:1.5px solid var(--line)}
+.hero-media{background:var(--box);border-radius:22px;overflow:hidden;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;box-shadow:0 22px 44px -34px rgba(20,51,42,.55)}
+.hero-media img{width:100%;height:100%;object-fit:contain}
+.trustline{display:flex;gap:22px;flex-wrap:wrap;margin-top:26px;font-size:12.5px;color:var(--muted)}
+.trustline b{color:var(--green)}
+
+/* ---------- section ---------- */
+section.block{padding:52px 0}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+h2{font-size:27px;font-weight:800;letter-spacing:-.01em;color:var(--green)}
+.sec-sub{font-size:13.5px;color:var(--muted);margin-bottom:28px;max-width:760px;text-align:justify}
+
+/* spec table */
+.spec-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.spec-table tr:nth-child(odd){background:#f7faf9}
+.spec-table td{padding:15px 20px;font-size:13.8px;border-bottom:1px solid var(--line);vertical-align:top}
+.spec-table tr:last-child td{border-bottom:none}
+.spec-table td.k{width:34%;color:var(--green);font-weight:700}
+.spec-table td.v{color:#43514c}
+.spec-note{font-size:12px;color:#94a09b;margin-top:12px}
+
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.gal figure{background:var(--box);border-radius:16px;aspect-ratio:16/9;overflow:hidden;margin:0;position:relative}
+.gal img{width:100%;height:100%;object-fit:contain}
+.gal .ph{border:1.5px dashed #cfdad6;background:#f7faf9;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12.5px;color:#8d9a95;font-weight:600;padding:12px}
+.gal .ph .ph-note{display:block;font-size:11px;font-weight:400;color:#a9b4b0;margin-top:6px;line-height:1.4}
+.gal figcaption{position:absolute;left:12px;bottom:12px;font-size:11.5px;font-weight:700;color:var(--green);background:rgba(255,255,255,.9);border-radius:8px;padding:4px 9px}
+
+/* highlight cards */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.hl{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 22px 24px}
+.hl i{color:var(--orange);font-size:19px;margin-bottom:12px;display:block}
+.hl h3{font-size:15px;color:var(--green);margin-bottom:8px;font-weight:700}
+.hl p{font-size:13px;line-height:1.66;color:var(--muted);text-align:justify}
+
+/* faq */
+.faq{background:#fff;border:1px solid var(--line);border-radius:18px;padding:8px 26px}
+.faq details{padding:18px 0;border-bottom:1px solid var(--line)}
+.faq details:last-child{border-bottom:none}
+.faq summary{cursor:pointer;font-size:14.5px;font-weight:700;color:var(--green);list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary i{color:var(--orange);font-size:12px;margin-top:4px}
+.faq p{margin:12px 0 2px;font-size:13.4px;line-height:1.7;color:var(--muted);text-align:justify}
+
+/* related */
+.rel{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;text-decoration:none}
+.card .im{aspect-ratio:16/9;background:var(--box);display:flex;align-items:center;justify-content:center}
+.card .im img{width:100%;height:100%;object-fit:contain}
+.card .tx{padding:18px 20px 22px}
+.card .tx small{font-size:11px;font-weight:800;letter-spacing:1px;color:var(--orange)}
+.card .tx h4{font-size:15.5px;color:var(--green);margin:7px 0 6px;line-height:1.3}
+.card .tx p{font-size:12.8px;color:var(--muted);line-height:1.6}
+
+/* cta band */
+.cta-band{background:var(--green);border-radius:24px;padding:42px 44px;display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap;margin:10px 0 60px}
+.cta-band h3{color:#fff;font-size:23px;margin-bottom:8px;letter-spacing:-.01em}
+.cta-band p{color:#b9cdc4;font-size:13.5px}
+.cta-band .btn-main{background:var(--orange);padding:15px 26px}
+.cta-band .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+
+@media(max-width:900px){
+ .navlinks a:not(.cta){display:none}
+ h1{font-size:30px}
+ .hero-grid{grid-template-columns:1fr;gap:26px}
+ .hero-media{order:-1}
+ .gal{grid-template-columns:1fr 1fr}
+ .grid3{grid-template-columns:1fr}
+ .rel{grid-template-columns:1fr}
+ .spec-table td.k{width:44%}
+ .cta-band{padding:30px 26px}
+ .sec-sub{font-size:13px}
+ section.block{padding:40px 0}
+}
+@media(max-width:900px){
+ .lead,.sec-sub,.hl p,.faq p{text-align:left}
+}
+@media(max-width:520px){
+ .nav .wrap{height:64px}
+ .logo b{font-size:21px}
+ .navlinks a.cta{padding:9px 13px;font-size:11.5px}
+ .gal{grid-template-columns:1fr}
+ .spec-table td{padding:12px 14px;font-size:12.8px}
+ .spec-table td.k{width:42%}
+ .lead{font-size:14.5px}
+ .crumb{font-size:12px;padding-top:18px}
+ .btn{padding:13px 18px;font-size:12.8px}
+ .wrap{padding:0 18px}
+}
+
+footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:12px;color:#8d9a95;text-align:center}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap">
+  <div class="logo"><b>TRUVIC MACHINERY</b><span>Processing Machinery &amp; Global Trade</span></div>
+  <div class="navlinks">
+    <a href="#">HOME</a><a href="#">PRODUCTS</a><a href="#" class="active">FIN TUBE</a><a href="#">GLOBAL NETWORK</a>
+    <a href="#" class="cta"><i class="fas fa-gear"></i>Machine Expert</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+  <div class="crumb">
+    <a href="#">Home</a><span class="sep">/</span><a href="#">Products</a><span class="sep">/</span><a href="#">Fin Tube Processing Machinery</a><span class="sep">/</span><span class="cur">Extruded Fin Tube Machine</span>
+  </div>
+
+  <section class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><i class="fas fa-circle"></i>FIN TUBE PROCESSING MACHINERY</div>
+        <h1>Extruded Fin Tube Machine</h1>
+        <p class="lead">Fabricates bimetallic high fin tubes by extruding aluminium fins firmly onto copper, carbon steel or stainless steel base tubes. Uniform fin height, tight bonding, and continuous running for mass production — finished tubes go into air coolers, heat exchangers, condensers and industrial radiator systems.</p>
+        <div class="chips">
+          <span class="chip"><i class="fas fa-ruler-vertical"></i>Fin height 6–16 mm</span>
+          <span class="chip"><i class="fas fa-circle-notch"></i>Base tube OD 9.52–25.4 mm</span>
+          <span class="chip"><i class="fas fa-gauge-high"></i>Up to 30 m/min</span>
+          <span class="chip"><i class="fas fa-certificate"></i>CE motor &amp; control</span>
+        </div>
+        <div class="btns">
+          <a href="#" class="btn btn-main"><i class="fas fa-file-invoice"></i>Get Factory Quote</a>
+          <a href="#" class="btn btn-ghost"><i class="fab fa-whatsapp"></i>WhatsApp an Engineer</a>
+        </div>
+        <div class="trustline">
+          <span><b>1 business day</b> technical reply</span>
+          <span><b>Plywood-case</b> export packing</span>
+          <span><b>12 months</b> warranty + spare parts list</span>
+        </div>
+      </div>
+      <div class="hero-media"><img src="file:///Users/wanglaoban/Desktop/github page modified/truvic/image/tube-wire-processing/fin-tube-processing/Extruded-Fin-Tube-Machine.png" alt="Extruded Fin Tube Machine"></div>
+    </div>
+  </section>
+</div>
+
+<section class="block" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<div class="wrap">
+  <div class="sec-head"><h2>Key specifications</h2></div>
+  <p class="sec-sub">Working range of the standard model. Tell us your tube size, fin height and output per shift and we quote the machine configured for that — not a one-size catalogue page.</p>
+  <table class="spec-table">
+    <tr><td class="k">Base tube material</td><td class="v">Copper · carbon steel · stainless steel (bimetallic)</td></tr>
+    <tr><td class="k">Base tube OD</td><td class="v">9.52 – 25.4 mm (custom tooling above range)</td></tr>
+    <tr><td class="k">Fin height</td><td class="v">6 – 16 mm, adjusted by die set</td></tr>
+    <tr><td class="k">Fin pitch</td><td class="v">2.5 – 6 mm</td></tr>
+    <tr><td class="k">Finishing speed</td><td class="v">10 – 30 m/min, continuous running</td></tr>
+    <tr><td class="k">Installed power</td><td class="v">18.5 kW · 380 V / 50 Hz (or per destination)</td></tr>
+    <tr><td class="k">Machine size / weight</td><td class="v">≈ 4,600 × 1,500 × 1,600 mm · ≈ 3,500 kg</td></tr>
+    <tr><td class="k">Scope of supply</td><td class="v">Machine, die set, tool kit, English manual, spare-parts list</td></tr>
+  </table>
+  <p class="spec-note">* Values shown for layout review — final specs confirmed on the proforma invoice.</p>
+</div>
+</section>
+
+<section class="block">
+<div class="wrap">
+  <div class="sec-head"><h2>Machine and finished tube</h2></div>
+  <p class="sec-sub">Four views: the machine, the extruding head, a finished bimetallic fin tube, and the tube in service inside a heat exchanger core.</p>
+  <div class="gal">
+    <figure><img src="file:///Users/wanglaoban/Desktop/github page modified/truvic/image/tube-wire-processing/fin-tube-processing/Extruded-Fin-Tube-Machine.png" alt=""><figcaption>Machine</figcaption></figure>
+    <figure><img src="file:///Users/wanglaoban/Desktop/github page modified/truvic/image/tube-wire-processing/fin-tube-processing/Extruded-Fin-Tube-Machine-Sample.png" alt=""><figcaption>Finished fin tube</figcaption></figure>
+    <figure class="ph"><div>Detail photo<div class="ph-note">extruding head — to be supplied</div></div></figure>
+    <figure class="ph"><div>Application photo<div class="ph-note">tube in heat exchanger core — to be supplied</div></div></figure>
+  </div>
+</div>
+</section>
+
+<section class="block" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<div class="wrap">
+  <div class="sec-head"><h2>Why this machine pays back</h2></div>
+  <p class="sec-sub">Three things buyers actually ask about on a fin tube line: bonding quality, die changeover time, and whether it runs continuously without stopping for jams.</p>
+  <div class="grid3">
+    <div class="hl"><i class="fas fa-link"></i><h3>Tight fin-to-tube bonding</h3><p>Extruded rather than glued or welded: the aluminium is formed onto the base tube so there is no contact resistance, and thermal performance stays stable over service life.</p></div>
+    <div class="hl"><i class="fas fa-sliders"></i><h3>Die change in minutes</h3><p>Fin height and pitch are set by the die set, not by shimming. A die swap takes minutes, so one machine covers several tube specifications.</p></div>
+    <div class="hl"><i class="fas fa-infinity"></i><h3>Continuous mass production</h3><p>Rigid frame and linear guides hold straightness on long runs, with low failure rate on the tooling — the machine is built to keep running, not to be repaired.</p></div>
+  </div>
+</div>
+</section>
+
+<section class="block">
+<div class="wrap">
+  <div class="sec-head"><h2>Buyer questions</h2></div>
+  <p class="sec-sub">The three questions we answer most often on this line, so you do not have to email first.</p>
+  <div class="faq">
+    <details open><summary>What is the minimum order quantity?<i class="fas fa-minus"></i></summary><p>One machine. We also supply as a line — extruding machine, fin tube, and the straightening/cutting unit downstream — but a single unit with tooling is a normal starting order.</p></details>
+    <details><summary>How long is the lead time?<i class="fas fa-plus"></i></summary><p>Typically 25–35 days from deposit, plus sea freight. Confirmed on the proforma invoice once tooling and voltage are fixed.</p></details>
+    <details><summary>Do you supply the die set and spare parts?<i class="fas fa-plus"></i></summary><p>Yes. The die set for your tube and fin specification is quoted with the machine, and a spare-parts list is issued with the order so you can re-order consumables directly.</p></details>
+  </div>
+</div>
+</section>
+
+<section class="block" style="background:#fff;border-top:1px solid var(--line)">
+<div class="wrap">
+  <div class="sec-head"><h2>Other machines in this line</h2></div>
+  <p class="sec-sub">Same production line, downstream and upstream units.</p>
+  <div class="rel">
+    <a class="card" href="#"><div class="im"><img src="file:///Users/wanglaoban/Desktop/github page modified/truvic/image/thumbs/tube-wire-processing/heat-exchanger-tube-processing/Copper-Tube-Straightening-and-Cutting-Machine.webp" alt=""></div><div class="tx"><small>HEAT EXCHANGER TUBE</small><h4>Copper Tube Straightening and Cutting Machine</h4><p>Straighten, cut to length and deburr copper tube before finning.</p></div></a>
+    <a class="card" href="#"><div class="im"><img src="file:///Users/wanglaoban/Desktop/github page modified/truvic/image/thumbs/tube-wire-processing/heat-exchanger-tube-processing/Copper-Tube-Return-Bender-for-Small-U-Bends.webp" alt=""></div><div class="tx"><small>HEAT EXCHANGER TUBE</small><h4>Copper Tube Return Bender for Small U Bends</h4><p>Forms small U-bends for heat exchanger tube bundles.</p></div></a>
+    <a class="card" href="#"><div class="im"><img src="file:///Users/wanglaoban/Desktop/github page modified/truvic/image/thumbs/welding-cutting/welding-machines/Air-Conditioner-Heat-Exchanger-Welding-Machine.webp" alt=""></div><div class="tx"><small>WELDING MACHINERY</small><h4>Air Conditioner Heat Exchanger Welding Machine</h4><p>Automatic welding of the coil after tube insertion and expansion.</p></div></a>
+  </div>
+</div>
+</section>
+
+<div class="wrap">
+  <div class="cta-band">
+    <div>
+      <h3>Send the tube spec, get a configured price</h3>
+      <p>Material, base tube OD, fin height and pitch, output per shift — one technical reply within a business day.</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a href="#" class="btn btn-main"><i class="fas fa-file-invoice"></i>Request a Quote</a>
+      <a href="#" class="btn btn-ghost"><i class="fab fa-whatsapp"></i>WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 TRUVIC Machinery Co., Ltd. · No. 778 Siping Road, Hongkou District, Shanghai 200092, China · teweike@foxmail.com</footer>
+</body>
+</html>

@@ -1264,6 +1264,11 @@
         <div class="form-card">
             <!-- formsubmit 表单 -->
             <form id="rfqForm" action="https://formsubmit.co/teweike@foxmail.com" method="POST">
+                <!-- 反垃圾 honeypot：正常访客看不到此字段，被填写即视为机器人（formsubmit 的 _honey 会被直接丢弃） -->
+                <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+                    <label for="rfqHoney">Leave this field empty</label>
+                    <input id="rfqHoney" type="text" name="_honey" tabindex="-1" autocomplete="off">
+                </div>
                 <!-- 表单配置参数 -->
                 <input type="hidden" name="_subject" value="New Machinery RFQ Inquiry">
                 <input type="hidden" name="_captcha" value="false">
@@ -1435,8 +1440,23 @@
         const successModal = document.getElementById('rfqSuccessModal');
         const closeSuccessBtn = document.getElementById('closeSuccessModal');
 
+        // ===== 反垃圾：蜜罐 + 时间陷阱 =====
+        const rfqHoney = document.getElementById('rfqHoney');
+        const rfqOpenedAt = Date.now();
+        const RFQ_MIN_FILL_MS = 3000;   // 3 秒内提交几乎必是机器人
+        function goThankYou(){ window.location.href = 'thank-you.html'; }
+
         rfqForm.addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            // 蜜罐被填 / 提交过快 => 静默视为垃圾，不发送、直接给“已收到”页，机器人无从察觉
+            const honeyFilled = rfqHoney && rfqHoney.value.trim() !== '';
+            const tooFast = (Date.now() - rfqOpenedAt) < RFQ_MIN_FILL_MS;
+            if (honeyFilled || tooFast) {
+                goThankYou();
+                return;
+            }
+
             submitBtn.disabled = true;
             submitBtn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
 
@@ -1451,9 +1471,8 @@
                 });
 
                 if (response.ok) {
-                    successModal.style.display = 'flex';
-                    document.body.style.overflow = 'hidden';
                     rfqForm.reset();
+                    goThankYou();          // 提交成功 -> 跳转 Thank You 页
                 } else {
                     alert('Send failed, please try again later or contact us via WhatsApp.');
                 }
