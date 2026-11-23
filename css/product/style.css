@@ -884,21 +884,28 @@ height:38px;
 .breadcrumb {
 display: flex;
 flex-wrap: wrap;
-justify-content: center;
+justify-content: flex-start;
 align-items: center;
-gap: 8px;
-font-size: 0.78rem;
-color: #5c6f68;
-margin-bottom: 0.9rem;
+gap: 10px;
+font-size: 0.98rem;
+line-height: 1.4;
+letter-spacing: 0.01em;
+color: #354a43;
+text-align: left;
+margin: 0 0 1.15rem;
+padding: 0;
 }
 .breadcrumb a {
-color: #8a4b28;
+color: #b3491a;
 text-decoration: none;
-font-weight: 500;
+font-weight: 700;
 }
 .breadcrumb a:hover { text-decoration: underline; }
-.breadcrumb .crumb-sep { color: #a9b5b0; }
-.breadcrumb .crumb-current { color: #14332a; font-weight: 700; }
+.breadcrumb .crumb-sep { color: #8fa39b; font-weight: 700; }
+.breadcrumb .crumb-current { color: #14332a; font-weight: 800; }
+@media (max-width: 640px) {
+.breadcrumb { font-size: 0.9rem; gap: 8px; margin-bottom: 1rem; }
+}
 
 /* ---------- 相关产线推荐 ---------- */
 .related-lines { padding: 0 0 clamp(2rem, 5vw, 3rem); }
