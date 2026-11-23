@@ -1020,6 +1020,18 @@ transition: 0.2s;
 
 /* ---------- 内容页（About / FAQ / 政策类） ---------- */
 .content-page .content-wrap { max-width: 880px; margin: 0 auto; }
+
+/* 正文两端对齐（About / FAQ / Contact / Support / Privacy / Terms） */
+.content-page p,
+.content-page li,
+.content-page td,
+.content-page th,
+.content-page blockquote,
+.content-page .faq-item p,
+.content-page .info-card p {
+    text-align: justify;
+    text-justify: inter-word;
+}
 .content-page h2 {
 font-size: clamp(1.15rem, 4vw, 1.45rem);
 color: #14332a;
@@ -1033,6 +1045,8 @@ font-size: 0.95rem;
 line-height: 1.75;
 }
 .content-page li { margin-bottom: 0.35rem; }
+/* 两端对齐后段间距稍加一点，避免整段糊在一起 */
+.content-page p { margin: 0 0 0.85rem; }
 .content-page ul { padding-left: 1.15rem; margin: 0.4rem 0 1rem; }
 .content-page .faq-item {
 border-bottom: 1px solid #e6ece9;
