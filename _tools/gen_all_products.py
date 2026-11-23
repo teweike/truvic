@@ -29,6 +29,17 @@ LINES = [
 
 CARD_RE = re.compile(r'<div class="product-card".*?Get Quote.*?</div>\s*</div>', re.S)
 
+# 各产线一句话描述（≤15 词，只讲这条产线做什么，不列具体机型）
+DESC = {
+    "welding-machines.html": "Spot, MIG/TIG and automated welding lines for sheet-metal and tube fabrication.",
+    "sheet-metal-laser-machine.html": "Laser cutting and sheet-metal forming equipment for precision fabrication workshops.",
+    "fin-tube-processing-machine.html": "Fin tube processing equipment for heat exchanger and condenser tube production.",
+    "heat-exchanger-tube-processing-machine.html": "Tube processing lines for heat exchangers, condensers and HVAC coil production.",
+    "transformer-busbar-processing-machine.html": "Core and busbar processing equipment for transformer and switchgear manufacturing.",
+    "rim-machinery.html": "Wheel rim forming and flaring equipment for automotive and wheel producers.",
+    "paper-plastic-machine.html": "Paper and plastic converting machines for cups, bags, lids and packaging.",
+}
+
 BANNER = """<section class="page-banner all-banner">
 <div class="container">
 <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="crumb-sep">/</span><span class="crumb-current">All Products</span></nav>
@@ -49,7 +60,7 @@ def read_line(fn):
         "file": fn,
         "name": html.unescape(name),
         "line": html.unescape(body_line),
-        "desc": html.unescape(desc),
+        "desc": DESC.get(fn, html.unescape(desc)),
         "cards": cards,
         "n": len(cards),
     }
