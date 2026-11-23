@@ -2,6 +2,8 @@
 // WebP 优先：支持的浏览器自动换用同名 .webp（体积约为 PNG 的 1/10），老浏览器回落原图
 const WEBP_OK = (function(){try{return document.createElement('canvas').toDataURL('image/webp').indexOf('webp') > -1;}catch(e){return false;}})();
 function webpOf(u){ return WEBP_OK ? String(u).replace(/\.(png|jpe?g)$/i, '.webp') : u; }
+// 卡片缩略图：image/thumbs/**/*.webp（720px，卡片只需这么宽）
+function thumbOf(u){ return WEBP_OK ? String(u).replace(/^image\//, 'image/thumbs/').replace(/\.(png|jpe?g)$/i, '.webp') : null; }
 const modal = document.getElementById('productModal');
 const sliderTrack = document.getElementById('sliderTrack');
 const sliderDots = document.getElementById('sliderDots');
@@ -33,21 +35,25 @@ if (entry.isIntersecting) {
 const imgWrap = entry.target;
 const img = imgWrap.querySelector('.lazy-img');
 const loader = imgWrap.querySelector('.img-loader');
-const realSrc = webpOf(img.dataset.lazy);
-if (!realSrc) return;
+const fullSrc = webpOf(img.dataset.lazy);
+if (!fullSrc) return;
+const thumbSrc = thumbOf(img.dataset.lazy);
 
-const tempImg = new Image();
-tempImg.src = realSrc;
-tempImg.onload = () => {
-img.src = realSrc;
+function show(src){
+img.src = src;
 img.classList.add('loaded');
 loader.classList.add('hidden');
-};
-tempImg.onerror = () => {
-img.src = realSrc;
-img.classList.add('loaded');
-loader.classList.add('hidden');
-};
+}
+function load(src, ok, fail){
+if (!src) return fail();
+const t = new Image();
+t.onload = ok;
+t.onerror = fail;
+t.src = src;
+}
+// 三级回退：缩略 webp -> 全尺寸 webp -> 原始 png/jpg
+load(thumbSrc, () => show(thumbSrc),
+() => load(fullSrc, () => show(fullSrc), () => show(img.dataset.lazy)));
 observer.unobserve(imgWrap);
 }
 });
