@@ -1468,7 +1468,7 @@
         const rfqHoney = document.getElementById('rfqHoney');
         const rfqOpenedAt = Date.now();
         const RFQ_MIN_FILL_MS = 3000;   // 3 秒内提交几乎必是机器人
-        function goThankYou(){ window.location.href = 'thank-you.html'; }
+        function goThankYou(){ window.location.href = 'thank-you.html?rfq=1'; }
 
         rfqForm.addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -1477,7 +1477,7 @@
             const honeyFilled = rfqHoney && rfqHoney.value.trim() !== '';
             const tooFast = (Date.now() - rfqOpenedAt) < RFQ_MIN_FILL_MS;
             if (honeyFilled || tooFast) {
-                goThankYou();
+                window.location.href = 'thank-you.html';   // 垃圾提交：不给 ?rfq=1，避免计入转化
                 return;
             }
 

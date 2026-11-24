@@ -166,7 +166,7 @@ document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new D
 
 <script>
   /* 询盘成功页：发一次 GA4 转化事件。
-     触发条件：①首页提交成功后打的 rfq_ok 标记；②从本站其他页面跳转进来（覆盖 sessionStorage 被浏览器拦截的情况） */
+     触发条件：①跳转地址带 ?rfq=1（主）；②首页打的 rfq_ok 标记；③从本站其他页面跳转进来 */
   (function () {
     var fire = false;
     try {
@@ -186,6 +186,11 @@ document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new D
           fire = true;
         }
       } catch (e3) {}
+    }
+    if (!fire) {
+      try {
+        if (/[?&]rfq=1/.test(window.location.search)) { fire = true; }
+      } catch (e4) {}
     }
     if (!fire) { return; }
     function send() {
