@@ -532,6 +532,21 @@ transition: gap 0.2s ease;
 gap: 10px;
 }
 
+.product-info .spec-link {
+color: #14332a;
+background: #fff;
+border: 1px solid #e3e9e7;
+border-radius: 10px;
+padding: 0.5rem 0.85rem;
+font-size: 0.86rem;
+justify-content: center;
+}
+.product-info .spec-link:hover {
+color: #b53a17;
+border-color: #f2c9b6;
+gap: 10px;
+}
+
 /* ========== 懒加载图片样式 ========== */
 .lazy-img {
 background-color: transparent;
