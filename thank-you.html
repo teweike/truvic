@@ -165,16 +165,29 @@ document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new D
 </script>
 
 <script>
-  /* 询盘提交成功落地页：发一次 GA4 转化事件，避免在提交瞬间跳转导致上报被中断 */
+  /* 询盘成功页：发一次 GA4 转化事件。
+     触发条件：①首页提交成功后打的 rfq_ok 标记；②从本站其他页面跳转进来（覆盖 sessionStorage 被浏览器拦截的情况） */
   (function () {
-    var fired = false;
+    var fire = false;
     try {
       if (sessionStorage.getItem('rfq_ok') === '1') {
         sessionStorage.removeItem('rfq_ok');
-        fired = true;
+        fire = true;
       }
     } catch (e) {}
-    if (!fired) return;
+    if (!fire) {
+      try {
+        var ref = document.referrer || '';
+        if (/teweikemachine\.com/i.test(ref) && !/thank-you/i.test(ref)) {
+          try {
+            if (sessionStorage.getItem('rfq_ty_seen') === '1') { return; }
+            sessionStorage.setItem('rfq_ty_seen', '1');
+          } catch (e2) {}
+          fire = true;
+        }
+      } catch (e3) {}
+    }
+    if (!fire) { return; }
     function send() {
       if (typeof gtag === 'function') {
         gtag('event', 'generate_lead', { form_name: 'rfq_home', transport_type: 'beacon' });
