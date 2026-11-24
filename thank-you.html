@@ -164,5 +164,24 @@
 document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new Date().getFullYear();});
 </script>
 
+<script>
+  /* 询盘提交成功落地页：发一次 GA4 转化事件，避免在提交瞬间跳转导致上报被中断 */
+  (function () {
+    var fired = false;
+    try {
+      if (sessionStorage.getItem('rfq_ok') === '1') {
+        sessionStorage.removeItem('rfq_ok');
+        fired = true;
+      }
+    } catch (e) {}
+    if (!fired) return;
+    function send() {
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', { form_name: 'rfq_home', transport_type: 'beacon' });
+      }
+    }
+    if (typeof gtag === 'function') { send(); } else { window.addEventListener('load', send); }
+  })();
+</script>
 </body>
 </html>
