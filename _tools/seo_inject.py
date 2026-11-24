@@ -11,13 +11,13 @@ MARK_E = "<!-- /SEO-BASE -->"
 
 PAGES = {
     "index.html": dict(
-        title="Processing Machinery Supplier in Shanghai | TRUVIC",
-        desc="Welding, sheet-metal, tube, transformer, rim and paper processing machinery from Shanghai factories - factory-direct pricing, English engineer support.",
+        title="Processing Machinery Supplier in China | TRUVIC",
+        desc="Welding, sheet-metal, tube, transformer, rim and paper processing machinery from China factories - factory-direct pricing, English engineer support.",
         og="image/og/og-brand.jpg", kind="home",
     ),
     "welding-machines.html": dict(
         title="Welding Machinery Supplier | MIG, TIG & Seam Welders | TRUVIC",
-        desc="Spot, MIG/TIG and seam welders for sheet-metal and tube fabrication. Factory-direct pricing, English engineer support, shipped from Shanghai.",
+        desc="Spot, MIG/TIG and seam welders for sheet-metal and tube fabrication. Factory-direct pricing, English engineer support, shipped from China.",
         og="image/og/og-welding.jpg", kind="line", line="Welding Machinery",
     ),
     "sheet-metal-laser-machine.html": dict(
@@ -27,17 +27,17 @@ PAGES = {
     ),
     "fin-tube-processing-machine.html": dict(
         title="Fin Tube Processing Machinery | Extruded Fin Tube Machine | TRUVIC",
-        desc="Extruded fin tube machines for heat exchanger tube production - fin height and pitch matched to your duty cycle, factory-direct pricing from Shanghai.",
+        desc="Extruded fin tube machines for heat exchanger tube production - fin height and pitch matched to your duty cycle, factory-direct pricing from China.",
         og="image/og/og-fin-tube.jpg", kind="line", line="Fin Tube Processing Machinery",
     ),
     "heat-exchanger-tube-processing-machine.html": dict(
         title="Heat Exchanger Tube Machinery | Straightening & Bending | TRUVIC",
-        desc="Copper tube straightening, cutting and small U-bend return bending machines for heat exchanger production - factory-direct pricing, shipped from Shanghai.",
+        desc="Copper tube straightening, cutting and small U-bend return bending machines for heat exchanger production - factory-direct pricing, shipped from China.",
         og="image/og/og-heat-exchanger.jpg", kind="line", line="Heat Exchanger Tube Processing Machinery",
     ),
     "transformer-busbar-processing-machine.html": dict(
         title="Transformer & Busbar Machinery | Core Cutting, Busbar | TRUVIC",
-        desc="Step-lap CRGO silicon steel core cutting and busbar punching, shearing and bending machines for transformer manufacturers - factory-direct from Shanghai.",
+        desc="Step-lap CRGO silicon steel core cutting and busbar punching, shearing and bending machines for transformer manufacturers - factory-direct from China.",
         og="image/og/og-transformer.jpg", kind="line", line="Transformer & Busbar Processing Machinery",
     ),
     "rim-machinery.html": dict(
@@ -47,7 +47,7 @@ PAGES = {
     ),
     "paper-plastic-machine.html": dict(
         title="Paper & Plastic Machinery | Cup, Bag & Lid Making | TRUVIC",
-        desc="Paper cup, bag, lid and injection moulding machines for disposable packaging - speeds matched to your output per shift, factory-direct pricing from Shanghai.",
+        desc="Paper cup, bag, lid and injection moulding machines for disposable packaging - speeds matched to your output per shift, factory-direct pricing from China.",
         og="image/og/og-paper-plastic.jpg", kind="line", line="Paper & Plastic Processing Machinery",
     ),
     "all-products.html": dict(
@@ -56,8 +56,8 @@ PAGES = {
         og="image/og/og-welding.jpg", kind="list",
     ),
     "about.html": dict(
-        title="About TRUVIC Machinery | Shanghai Processing Machinery Supplier",
-        desc="TRUVIC Machinery sources processing machinery next to the builders in Shanghai, Jiangsu and Zhejiang, inspects every line before crating and ships worldwide.",
+        title="About TRUVIC Machinery | China Processing Machinery Supplier",
+        desc="TRUVIC Machinery sources processing machinery next to the builders across China, inspects every line before crating and ships worldwide.",
         og="image/og/og-brand.jpg", kind="page",
     ),
     "contact.html": dict(
@@ -105,7 +105,7 @@ ORG = {
         "addressCountry": "CN",
     },
     "sameAs": ["https://www.youtube.com/@WyattWang-TWK"],
-    "description": "Shanghai-based supplier of processing machinery: welding, sheet metal, tube, transformer, rim and packaging lines, exported worldwide with factory-direct pricing.",
+    "description": "China-based supplier of processing machinery: welding, sheet metal, tube, transformer, rim and packaging lines, exported worldwide with factory-direct pricing.",
 }
 
 
