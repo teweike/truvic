@@ -452,6 +452,7 @@ padding: clamp(3rem, 8vw, 5rem) 0;
 display: flex;
 flex-wrap: wrap;
 justify-content: flex-start;
+align-items: stretch;
 gap: 28px;
 }
 /* 卡片宽度固定，数量从 1 到 N 都不改变单卡尺寸；换行后每行都从左往右排列 */
@@ -505,11 +506,15 @@ padding:1.6rem 1.5rem 1.7rem;
 display: flex;
 flex-direction: column;
 gap: 0.5rem;
+flex: 1 1 auto;
 }
 .product-info h3 {
 font-size:1.2rem;
 font-weight:700;
 color: #14332a;
+line-height: 1.3;
+/* 同一行卡片标题统一占两行高度，使下方描述起始位置对齐 */
+min-height: calc(2 * 1.3em);
 margin-bottom: 0.2rem;
 }
 .product-info p {
@@ -517,6 +522,8 @@ color:#475569;
 font-size:0.9rem;
 margin-bottom:0.6rem;
 line-height: 1.6;
+/* 描述区吸收剩余高度，使同一行卡片的参数按钮落在同一基线上 */
+flex: 1 1 auto;
 }
 .product-info a {
 color:#b53a17;
