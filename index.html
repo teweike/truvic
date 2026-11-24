@@ -68,6 +68,8 @@
             gap: 12px;
         }
         
+        .logo { flex: 0 0 auto; }
+
         .logo h1, .logo .logo-title {
             font-size: clamp(1.4rem, 6vw, 2rem);
             font-weight: 800;
@@ -78,16 +80,25 @@
             color: transparent;
             line-height: 1.2;
         }
-        
+
+        .logo .logo-title {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 3px;
+        }
+
         .logo span {
-            font-size: 0.7rem;
+            font-size: 0.66rem;
             font-weight: 600;
             color: #c2410c;
             background: #fff1ed;
             display: inline-block;
             padding: 2px 10px;
             border-radius: 40px;
-            margin-top: 6px;
+            margin-top: 0;
+            white-space: nowrap;
+            -webkit-text-fill-color: #c2410c;
         }
         
         .nav-links {
@@ -1148,7 +1159,7 @@
             <h1>Industrial Processing Machinery,<br>Straight from China’s Factories</h1>
             <p class="justify-text">Welding &amp; cutting, tube &amp; wire, transformer core, wheel rim and paper &amp; plastic processing lines — with technical selection, factory pricing, spare parts and one English-speaking engineer from inquiry to delivery.</p>
             <div class="hero-buttons">
-                <a href="#contact-form" class="btn-primary">Request a Technical Quote <i class="fas fa-arrow-right"></i></a>
+                <a href="#contact-form" class="btn-primary">Request a Quote <i class="fas fa-arrow-right"></i></a>
                 <a href="#product-lines" class="btn-outline">View Machine Lines</a>
             </div>
         </div>
@@ -1156,7 +1167,7 @@
             <!-- 重点：手机端图片会位于文字下方 (flex列向排列 + order 保证) -->
             <picture>
                 <source srcset="./image/mainpage/homepage1.webp" type="image/webp">
-                <img src="./image/mainpage/homepage1.png" alt="Robotic arm in an automated machinery production line" width="2992" height="1576" fetchpriority="high">
+                <img src="./image/mainpage/homepage1.webp" alt="Robotic arm in an automated machinery production line" width="2992" height="1576" fetchpriority="high">
             </picture>
         </div>
     </div>
@@ -1164,7 +1175,7 @@
 
 <div class="trust-bar" id="product-lines">
     <div class="container">
-        <div class="trust-text">SEVEN PROCESSING LINES · 30+ MACHINE MODELS · FACTORY-DIRECT PRICING</div>
+        <div class="trust-text">SEVEN PROCESSING LINES · 30+ MACHINE TYPES · FACTORY-DIRECT PRICING</div>
         <div class="logo-cloud">
             <a class="brand-item" style="text-decoration:none" href="welding-machines.html"><i class="fas fa-bolt"></i> Welding Machinery</a>
             <a class="brand-item" style="text-decoration:none" href="sheet-metal-laser-machine.html"><i class="fas fa-compress"></i> Sheet-Metal and Laser Machinery</a>
@@ -1180,7 +1191,7 @@
 <section id="services" class="services">
     <div class="container">
         <div class="section-header">
-            <h2>One-Stop Machinery Foreign Trade Solutions</h2>
+            <h2>Sourcing, Export &amp; After-Sales Support</h2>
             <p>Sourcing, export logistics, commissioning and after-sales support for industrial processing machinery — we deliver a working line, not just a machine.</p>
         </div>
         <div class="cards-grid">
@@ -1215,7 +1226,7 @@
 <section class="stats">
     <div class="container stats-grid">
         <div class="stat-item"><h3>7</h3><p>Processing Lines</p></div>
-        <div class="stat-item"><h3>30+</h3><p>Machine Models</p></div>
+        <div class="stat-item"><h3>30+</h3><p>Machine Types</p></div>
         <div class="stat-item"><h3>&lt;24h</h3><p>Quote Response</p></div>
         <div class="stat-item"><h3>100%</h3><p>Factory-Direct Supply</p></div>
     </div>
