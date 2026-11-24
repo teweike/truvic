@@ -25,6 +25,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="../../css/product/style.css">
 <style>
 :root{
  --green:#14332a; --green2:#1c4a3c; --orange:#c2410c; --orange-l:#b3491a;
@@ -34,21 +35,7 @@
 body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
 .wrap{max-width:1240px;margin:0 auto;padding:0 28px}
 
-.nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:78px;gap:24px}
-.logo{display:flex;flex-direction:column;line-height:1.05}
-.logo b{font-size:26px;font-weight:800;letter-spacing:-.02em;background:linear-gradient(135deg,#133a30,#c4451c);-webkit-background-clip:text;background-clip:text;color:transparent}
-.logo span{font-size:10.5px;font-weight:600;color:var(--orange);background:#fff1ed;border-radius:40px;padding:2px 9px;margin-top:5px;width:max-content}
-.navlinks{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.4px}
-.navlinks a{color:var(--green);text-decoration:none;padding:9px 16px;border-radius:40px;white-space:nowrap}
-.navlinks a.active{background:var(--green);color:#fff}
-.navlinks a.cta{background:var(--orange);color:#fff}
-.navlinks a.cta i{margin-right:6px}
-
-.crumb{padding:26px 0 6px;font-size:13px;color:var(--muted)}
-.crumb a{color:var(--orange);text-decoration:none;font-weight:600}
-.crumb span.sep{color:#b9c2bf;margin:0 9px}
-.crumb .cur{color:var(--green);font-weight:700}
+.crumb-bar{padding:22px 0 0}
 
 .hero{padding:14px 0 40px}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:46px;align-items:start}
@@ -180,18 +167,47 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:12px;color
 </head>
 <body>
 
-<nav class="nav"><div class="wrap">
-  <div class="logo"><b>TRUVIC MACHINERY</b><span>Processing Machinery &amp; Global Trade</span></div>
-  <div class="navlinks">
-    <a href="../../index.html">HOME</a><a href="../../all-products.html">PRODUCTS</a><a href="../../welding-machines.html" class="active">WELDING</a><a href="../../index.html#network">GLOBAL NETWORK</a>
-    <a href="../../index.html?machine=Electron%20Beam%20Welding%20Machine&amp;line=Welding%20Machinery#contact-form" class="cta"><i class="fas fa-gear"></i>Machine Expert</a>
-  </div>
-</div></nav>
+<nav class="navbar">
+<div class="container nav-flex">
+<div class="logo">
+<div class="logo-title"> TRUVIC MACHINERY<span>Processing Machinery &amp; Global Trade</span></div>
+</div>
+<ul class="nav-links">
+<li><a href="../../index.html">HOME</a></li>
+<li><a href="../../index.html#services">SERVICES</a></li>
+<li class="nav-item-dropdown">
+<a href="../../all-products.html" class="dropdown-trigger"><span>PRODUCTS</span></a>
+<button type="button" class="dropdown-caret" aria-label="Open product menu" aria-expanded="false"><i class="fas fa-chevron-down"></i></button>
+<ul class="dropdown-menu">
+<li class="has-submenu">
+<a href="#" class="submenu-trigger">Welding &amp; Cutting <i class="fas fa-chevron-right"></i></a>
+<ul class="submenu">
+<li><a href="../../welding-machines.html">Welding Machinery</a></li>
+<li><a href="../../sheet-metal-laser-machine.html">Sheet-Metal and Laser Machinery</a></li>
+</ul>
+</li>
+<li class="has-submenu">
+<a href="#" class="submenu-trigger">Tube &amp; Wire Processing <i class="fas fa-chevron-right"></i></a>
+<ul class="submenu">
+<li><a href="../../fin-tube-processing-machine.html">Fin Tube Processing Machinery</a></li>
+<li><a href="../../heat-exchanger-tube-processing-machine.html">Heat Exchanger Tube Processing Machinery</a></li>
+</ul>
+</li>
+<li><a href="../../transformer-busbar-processing-machine.html">Transformer &amp; Busbar Processing Machinery</a></li>
+<li><a href="../../rim-machinery.html">Rim Making Machinery</a></li>
+<li><a href="../../paper-plastic-machine.html">Paper &amp; Plastic Processing Machinery</a></li>
+</ul>
+</li>
+<li><a href="../../index.html#global">GLOBAL NETWORK</a></li>
+</ul>
+<a href="../../index.html#contact-form" class="contact-btn"><i class="fas fa-gear"></i> Machine Expert</a>
+</div>
+</nav>
 
 <div class="wrap">
-  <div class="crumb">
-    <a href="../../index.html">Home</a><span class="sep">/</span><a href="../../all-products.html">Products</a><span class="sep">/</span><a href="../../welding-machines.html">Welding Machinery</a><span class="sep">/</span><span class="cur">Electron Beam Welding Machine</span>
-  </div>
+<div class="crumb-bar">
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="../../index.html">Home</a><span class="crumb-sep">/</span><a href="../../all-products.html">Products</a><span class="crumb-sep">/</span><a href="../../welding-machines.html">Welding Machinery</a><span class="crumb-sep">/</span><span class="crumb-current">Electron Beam Welding Machine</span></nav>
+</div>
 
   <section class="hero">
     <div class="hero-grid">
@@ -489,7 +505,33 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:12px;color
   </div>
 </div>
 
-<footer>© 2026 TRUVIC Machinery Co., Ltd. · Processing Machinery · China · All Rights Reserved</footer>
+<footer class="footer">
+<div class="container">
+<div class="footer-grid">
+<div class="footer-col"><h4>TRUVIC Machinery</h4><p>China-based supplier of processing machinery: welding, sheet metal, tube, transformer, rim and packaging lines. Factory-direct prices, export documents and spare parts from one contact.</p><div class="social-icons"><i class="fab fa-linkedin-in"></i><i class="fab fa-facebook-f"></i><i class="fab fa-youtube"></i><i class="fab fa-weixin"></i></div></div>
+<div class="footer-col"><h4>Company</h4><ul><li><a href="../../about.html">About Us</a></li><li><a href="../../contact.html">Contact</a></li><li><a href="../../faq.html">FAQ</a></li><li><a href="../../index.html#services">How We Work</a></li></ul></div>
+<div class="footer-col"><h4>Machine Lines</h4><ul><li><a href="../../all-products.html">All Products</a></li><li><a href="../../welding-machines.html">Welding Machinery</a></li><li><a href="../../sheet-metal-laser-machine.html">Sheet-Metal and Laser Machinery</a></li><li><a href="../../fin-tube-processing-machine.html">Fin Tube Processing Machinery</a></li><li><a href="../../heat-exchanger-tube-processing-machine.html">Heat Exchanger Tube Processing Machinery</a></li><li><a href="../../transformer-busbar-processing-machine.html">Transformer &amp; Busbar Processing Machinery</a></li><li><a href="../../rim-machinery.html">Rim Making Machinery</a></li><li><a href="../../paper-plastic-machine.html">Paper &amp; Plastic Processing Machinery</a></li></ul></div>
+<div class="footer-col"><h4>Support &amp; Legal</h4><ul><li><a href="../../support.html#warranty">Warranty &amp; Spare Parts</a></li><li><a href="../../support.html#shipping">Shipping &amp; Packing</a></li><li><a href="../../support.html#documents">Export Documents</a></li><li><a href="../../privacy.html">Privacy Policy</a></li><li><a href="../../terms.html">Terms of Sale</a></li></ul></div>
+</div>
+<div class="copyright"><p>© <span id="footerYear">2026</span> TRUVIC Machinery Co., Ltd. | Processing Machinery · China | All Rights Reserved</p></div>
+</div>
+</footer>
+
+<script>
+document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new Date().getFullYear();});
+// 导航 PRODUCTS 下拉：PC hover（CSS），移动端点击箭头展开
+(function(){
+var wrap=document.querySelector('.nav-item-dropdown');
+if(!wrap) return;
+var caret=wrap.querySelector('.dropdown-caret');
+var subs=wrap.querySelectorAll('.submenu-trigger');
+function closeAll(){wrap.classList.remove('open');wrap.querySelectorAll('li.open').forEach(function(li){li.classList.remove('open');});if(caret)caret.setAttribute('aria-expanded','false');}
+if(caret){caret.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();wrap.classList.toggle('open');if(caret)caret.setAttribute('aria-expanded',wrap.classList.contains('open')?'true':'false');});}
+subs.forEach(function(t){t.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(window.innerWidth>768)return;var li=t.parentElement;var opened=li.classList.toggle('open');Array.prototype.forEach.call(li.parentElement.children,function(sb){if(sb!==li)sb.classList.remove('open');});if(!opened)li.classList.remove('open');});});
+document.addEventListener('click',function(e){if(!e.target.closest('.nav-item-dropdown'))closeAll();});
+window.addEventListener('resize',function(){if(window.innerWidth>768)closeAll();});
+})();
+</script>
 
 </body>
 </html>
