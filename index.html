@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6CRT4W5T3H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6CRT4W5T3H');
+</script>
+
     <meta charset="UTF-8">
     <!-- 优化视口：移动端完美缩放，防止自动调整字体 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
@@ -1486,6 +1495,9 @@
                 });
 
                 if (response.ok) {
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'generate_lead', { form_name: 'rfq_home' });
+                    }
                     rfqForm.reset();
                     goThankYou();          // 提交成功 -> 跳转 Thank You 页
                 } else {
