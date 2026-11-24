@@ -1000,6 +1000,10 @@ font-weight: 700;
 .breadcrumb { font-size: 0.9rem; gap: 8px; margin-bottom: 1rem; }
 }
 
+/* ---------- 面包屑（独立于 banner 的顶部条） ---------- */
+.crumb-top { padding: 22px 0 8px; }
+.crumb-top .breadcrumb { margin: 0; }
+
 /* ---------- 相关产线推荐 ---------- */
 .related-lines { padding: 0 0 clamp(2rem, 5vw, 3rem); }
 .related-head { max-width: 760px; margin: 0 auto 1.4rem; text-align: center; }
