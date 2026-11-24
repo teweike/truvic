@@ -223,6 +223,23 @@ const raw = card.dataset.gallery || '';
 const imgs = raw.split(',').map(s=>s.trim()).filter(s=>s);
 modalTitle.textContent = card.dataset.title;
 modalDesc.textContent = card.dataset.desc;
+// 机型有独立详情页时，在弹窗里给出技术参数入口
+let specBtn = document.getElementById("modalSpecBtn");
+if (!specBtn) {
+specBtn = document.createElement("a");
+specBtn.id = "modalSpecBtn";
+specBtn.className = "modal-spec-btn";
+specBtn.innerHTML = 'Full specifications <i class="fas fa-arrow-right"></i>';
+const quoteAnchor = document.getElementById("modalQuoteBtn");
+quoteAnchor.parentNode.insertBefore(specBtn, quoteAnchor);
+}
+if (card.dataset.detail) {
+specBtn.href = card.dataset.detail;
+specBtn.style.display = "inline-flex";
+} else {
+specBtn.removeAttribute("href");
+specBtn.style.display = "none";
+}
 const quoteBtn = document.getElementById("modalQuoteBtn");
 if (quoteBtn) {
 // 多产线总览页：优先取卡片所在区块的 data-line，单产线页回落 body
