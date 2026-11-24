@@ -867,9 +867,16 @@
         
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            /* 四栏定宽比例：Machine Lines 栏更宽，长机型名尽量单行显示 */
+            grid-template-columns: 1.05fr 0.9fr 1.62fr 0.9fr;
             gap: 2rem;
             margin-bottom: 2.5rem;
+        }
+        @media (max-width: 900px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 1.7rem; }
+        }
+        @media (max-width: 560px) {
+            .footer-grid { grid-template-columns: 1fr; gap: 1.2rem; }
         }
         
         .footer-col h4 {
