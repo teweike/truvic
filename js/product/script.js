@@ -230,8 +230,10 @@ specBtn = document.createElement("a");
 specBtn.id = "modalSpecBtn";
 specBtn.className = "modal-spec-btn";
 specBtn.innerHTML = 'Full specifications <i class="fas fa-arrow-right"></i>';
-const quoteAnchor = document.getElementById("modalQuoteBtn");
-quoteAnchor.parentNode.insertBefore(specBtn, quoteAnchor);
+// 放在左侧图片区下方
+const imgWrap = document.querySelector(".modal-box .modal-img-wrap");
+const holder = imgWrap || quoteAnchor.parentNode;
+holder.appendChild(specBtn);
 }
 if (card.dataset.detail) {
 specBtn.href = card.dataset.detail;
