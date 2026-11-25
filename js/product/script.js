@@ -427,3 +427,15 @@ if (dropdownTrigger) {
 }
 
 window.addEventListener('DOMContentLoaded', initLazyImages);
+
+/* 产品计数：页面卡片数 > 6 时显示计数标签，6 个及以内保持隐藏（不占位） */
+(function () {
+	var badge = document.querySelector('.line-count');
+	if (!badge) return;
+	var count = document.querySelectorAll('.product-card').length;
+	if (count > 6) {
+		var num = badge.querySelector('b');
+		if (num) num.textContent = count;
+		badge.classList.add('is-on');
+	}
+})();

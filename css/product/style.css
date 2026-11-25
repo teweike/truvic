@@ -1226,3 +1226,30 @@ margin: 1.2rem 0;
     }
     .line-chip { font-size: 0.8rem; padding: 8px 14px; }
 }
+
+/* 产线产品计数标签：仅当该页卡片数 > 6 时由 JS 显示（.line-count.is-on），其余情况保持隐藏 */
+.line-count {
+display: none;
+align-items: center;
+gap: 8px;
+margin: 1.1rem auto 0;
+padding: 7px 15px;
+border-radius: 40px;
+background: #fff1ed;
+border: 1px solid #f7d8cc;
+color: #c2410c;
+font-size: 11.5px;
+font-weight: 800;
+letter-spacing: 1.4px;
+line-height: 1.2;
+white-space: nowrap;
+width: fit-content;
+}
+.line-count.is-on { display: inline-flex; }
+.line-count i { font-size: 11px; color: #c2410c; }
+.line-count b { font-size: 15px; font-weight: 800; letter-spacing: 0; color: #14332a; }
+.line-count span { color: #c2410c; }
+@media (max-width: 640px) {
+.line-count { font-size: 10.5px; letter-spacing: 1.1px; padding: 6px 12px; }
+.line-count b { font-size: 14px; }
+}
