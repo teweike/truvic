@@ -313,15 +313,15 @@
   <div class="sec-head"><h2>Complementary Machines</h2></div>
   <p class="sec-sub">The line is the spine; these machines feed or finish it.</p>
   <div class="rel">
-    <a class="card" href="../3-in-1-welding-station-for-h-beam/">
+    <a class="card" href="../3-in-1-welding-station-for-h-beam/" data-detail="../3-in-1-welding-station-for-h-beam/">
       <div class="im"><img src="../../image/machines/3-in-1-welding-station-for-h-beam/hero.webp" alt="3 in 1 Welding Station for H Beam"></div>
       <div class="tx"><small>WELDING MACHINERY</small><h4>3 in 1 Welding Station for H Beam</h4><p>One station for fit-up, welding and straightening when floor space is tight.</p></div>
     </a>
-    <a class="card" href="../dual-station-robotic-laser-welding-workstation/">
+    <a class="card" href="../dual-station-robotic-laser-welding-workstation/" data-detail="../dual-station-robotic-laser-welding-workstation/">
       <div class="im"><img src="../../image/machines/dual-station-robotic-laser-welding-workstation/hero.webp" alt="Dual Station Robotic Laser Welding Workstation"></div>
       <div class="tx"><small>WELDING MACHINERY</small><h4>Dual Station Robotic Laser Welding Workstation</h4><p>Laser cell for thin-wall sub-assemblies on the same shop floor.</p></div>
     </a>
-    <a class="card" href="../../sheet-metal-laser-machine.html">
+    <a class="card" href="../fiber-laser-cutting-machine/" data-detail="../fiber-laser-cutting-machine/">
       <div class="im"><img src="../../image/welding-cutting/sheet-metal-laser-machine/Fiber-Laser-Cutting-Machine.webp" alt="Fiber Laser Cutting Machine"></div>
       <div class="tx"><small>SHEET-METAL & LASER</small><h4>Fiber Laser Cutting Machine</h4><p>Cuts the web and flange plates that feed this line.</p></div>
     </a>
@@ -354,21 +354,7 @@
 </div>
 </footer>
 
-<script>
-document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new Date().getFullYear();});
-// 导航 PRODUCTS 下拉：PC hover（CSS），移动端点击箭头展开
-(function(){
-var wrap=document.querySelector('.nav-item-dropdown');
-if(!wrap) return;
-var caret=wrap.querySelector('.dropdown-caret');
-var subs=wrap.querySelectorAll('.submenu-trigger');
-function closeAll(){wrap.classList.remove('open');wrap.querySelectorAll('li.open').forEach(function(li){li.classList.remove('open');});if(caret)caret.setAttribute('aria-expanded','false');}
-if(caret){caret.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();wrap.classList.toggle('open');if(caret)caret.setAttribute('aria-expanded',wrap.classList.contains('open')?'true':'false');});}
-subs.forEach(function(t){t.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(window.innerWidth>768)return;var li=t.parentElement;var opened=li.classList.toggle('open');Array.prototype.forEach.call(li.parentElement.children,function(sb){if(sb!==li)sb.classList.remove('open');});if(!opened)li.classList.remove('open');});});
-document.addEventListener('click',function(e){if(!e.target.closest('.nav-item-dropdown'))closeAll();});
-window.addEventListener('resize',function(){if(window.innerWidth>768)closeAll();});
-})();
-</script>
+<script src="../../js/common.js"></script>
 
 </body>
 </html>

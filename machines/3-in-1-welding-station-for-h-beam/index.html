@@ -297,15 +297,15 @@
   <div class="sec-head"><h2>Complementary Machines</h2></div>
   <p class="sec-sub">A combined station is usually the middle of a beam line — these fit around it.</p>
   <div class="rel">
-    <a class="card" href="../h-beam-horizontal-assembly-and-welding-production-line/">
+    <a class="card" href="../h-beam-horizontal-assembly-and-welding-production-line/" data-detail="../h-beam-horizontal-assembly-and-welding-production-line/">
       <div class="im"><img src="../../image/machines/h-beam-horizontal-assembly-and-welding-production-line/hero.webp" alt="H beam Horizontal Assembly and Welding Production Line"></div>
       <div class="tx"><small>WELDING MACHINERY</small><h4>H beam Horizontal Assembly and Welding Production Line</h4><p>Full line: end assembly, front and back welding, overturning and conveyors.</p></div>
     </a>
-    <a class="card" href="../dual-station-robotic-laser-welding-workstation/">
+    <a class="card" href="../dual-station-robotic-laser-welding-workstation/" data-detail="../dual-station-robotic-laser-welding-workstation/">
       <div class="im"><img src="../../image/machines/dual-station-robotic-laser-welding-workstation/hero.webp" alt="Dual Station Robotic Laser Welding Workstation"></div>
       <div class="tx"><small>WELDING MACHINERY</small><h4>Dual Station Robotic Laser Welding Workstation</h4><p>Two-station robot cell for precision laser welding of thin-wall parts.</p></div>
     </a>
-    <a class="card" href="../../welding-machines.html">
+    <a class="card" href="../oxyhydrogen-welding-machine/" data-detail="../oxyhydrogen-welding-machine/">
       <div class="im"><img src="../../image/welding-cutting/welding-machines/Oxyhydrogen-Welding-Machine.webp" alt="Oxyhydrogen Welding Machine"></div>
       <div class="tx"><small>WELDING MACHINERY</small><h4>Oxyhydrogen Welding Machine</h4><p>Water-electrolysis hydrogen-oxygen flame unit for brazing and repair work.</p></div>
     </a>
@@ -338,21 +338,7 @@
 </div>
 </footer>
 
-<script>
-document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new Date().getFullYear();});
-// 导航 PRODUCTS 下拉：PC hover（CSS），移动端点击箭头展开
-(function(){
-var wrap=document.querySelector('.nav-item-dropdown');
-if(!wrap) return;
-var caret=wrap.querySelector('.dropdown-caret');
-var subs=wrap.querySelectorAll('.submenu-trigger');
-function closeAll(){wrap.classList.remove('open');wrap.querySelectorAll('li.open').forEach(function(li){li.classList.remove('open');});if(caret)caret.setAttribute('aria-expanded','false');}
-if(caret){caret.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();wrap.classList.toggle('open');if(caret)caret.setAttribute('aria-expanded',wrap.classList.contains('open')?'true':'false');});}
-subs.forEach(function(t){t.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(window.innerWidth>768)return;var li=t.parentElement;var opened=li.classList.toggle('open');Array.prototype.forEach.call(li.parentElement.children,function(sb){if(sb!==li)sb.classList.remove('open');});if(!opened)li.classList.remove('open');});});
-document.addEventListener('click',function(e){if(!e.target.closest('.nav-item-dropdown'))closeAll();});
-window.addEventListener('resize',function(){if(window.innerWidth>768)closeAll();});
-})();
-</script>
+<script src="../../js/common.js"></script>
 
 </body>
 </html>

@@ -349,15 +349,15 @@
   <div class="sec-head"><h2>Complementary Machines</h2></div>
   <p class="sec-sub">Most orders for an EBW cell also include one of these — same engineering contact, one shipment.</p>
   <div class="rel">
-    <a class="card" href="../../welding-machines.html">
+    <a class="card" href="../dual-station-robotic-laser-welding-workstation/" data-detail="../dual-station-robotic-laser-welding-workstation/">
       <div class="im"><img src="../../image/machines/electron-beam-welding-machine/rel-laser.webp" alt="Dual station robotic laser welding workstation"></div>
       <div class="tx"><small>WELDING MACHINERY</small><h4>Dual Station Robotic Laser Welding Workstation</h4><p>Six-axis dual-station cell for precision laser welding of thin-wall assemblies.</p></div>
     </a>
-    <a class="card" href="../../welding-machines.html">
+    <a class="card" href="../cobot-collaborative-handling-robot/" data-detail="../cobot-collaborative-handling-robot/">
       <div class="im"><img src="../../image/machines/electron-beam-welding-machine/rel-cobot.webp" alt="Cobot collaborative welding robot"></div>
       <div class="tx"><small>WELDING MACHINERY</small><h4>Cobot Collaborative Handling Robot</h4><p>Drag-to-teach cobot for loading and unloading weld cells without programming skills.</p></div>
     </a>
-    <a class="card" href="../../welding-machines.html">
+    <a class="card" href="../3-in-1-welding-station-for-h-beam/" data-detail="../3-in-1-welding-station-for-h-beam/">
       <div class="im"><img src="../../image/machines/electron-beam-welding-machine/rel-hbeam.webp" alt="Three in one H beam welding station"></div>
       <div class="tx"><small>WELDING MACHINERY</small><h4>3 in 1 Welding Station for H Beam</h4><p>Fit-up, welding and straightening of H beam sections in a single station.</p></div>
     </a>
@@ -390,21 +390,7 @@
 </div>
 </footer>
 
-<script>
-document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new Date().getFullYear();});
-// 导航 PRODUCTS 下拉：PC hover（CSS），移动端点击箭头展开
-(function(){
-var wrap=document.querySelector('.nav-item-dropdown');
-if(!wrap) return;
-var caret=wrap.querySelector('.dropdown-caret');
-var subs=wrap.querySelectorAll('.submenu-trigger');
-function closeAll(){wrap.classList.remove('open');wrap.querySelectorAll('li.open').forEach(function(li){li.classList.remove('open');});if(caret)caret.setAttribute('aria-expanded','false');}
-if(caret){caret.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();wrap.classList.toggle('open');if(caret)caret.setAttribute('aria-expanded',wrap.classList.contains('open')?'true':'false');});}
-subs.forEach(function(t){t.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(window.innerWidth>768)return;var li=t.parentElement;var opened=li.classList.toggle('open');Array.prototype.forEach.call(li.parentElement.children,function(sb){if(sb!==li)sb.classList.remove('open');});if(!opened)li.classList.remove('open');});});
-document.addEventListener('click',function(e){if(!e.target.closest('.nav-item-dropdown'))closeAll();});
-window.addEventListener('resize',function(){if(window.innerWidth>768)closeAll();});
-})();
-</script>
+<script src="../../js/common.js"></script>
 
 </body>
 </html>

@@ -334,21 +334,7 @@
 </div>
 </footer>
 
-<script>
-document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new Date().getFullYear();});
-// 导航 PRODUCTS 下拉：PC hover（CSS），移动端点击箭头展开
-(function(){
-var wrap=document.querySelector('.nav-item-dropdown');
-if(!wrap) return;
-var caret=wrap.querySelector('.dropdown-caret');
-var subs=wrap.querySelectorAll('.submenu-trigger');
-function closeAll(){wrap.classList.remove('open');wrap.querySelectorAll('li.open').forEach(function(li){li.classList.remove('open');});if(caret)caret.setAttribute('aria-expanded','false');}
-if(caret){caret.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();wrap.classList.toggle('open');if(caret)caret.setAttribute('aria-expanded',wrap.classList.contains('open')?'true':'false');});}
-subs.forEach(function(t){t.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();if(window.innerWidth>768)return;var li=t.parentElement;var opened=li.classList.toggle('open');Array.prototype.forEach.call(li.parentElement.children,function(sb){if(sb!==li)sb.classList.remove('open');});if(!opened)li.classList.remove('open');});});
-document.addEventListener('click',function(e){if(!e.target.closest('.nav-item-dropdown'))closeAll();});
-window.addEventListener('resize',function(){if(window.innerWidth>768)closeAll();});
-})();
-</script>
+<script src="../../js/common.js"></script>
 
 </body>
 </html>

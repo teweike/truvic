@@ -166,6 +166,7 @@ transform: translateY(-2px);
 .nav-item-dropdown {
 display: flex;
 align-items: center;
+position: relative;
 background: #b53a17;
 border-radius: 40px;
 padding: 0;
@@ -202,9 +203,6 @@ transition: background .2s ease;
 .nav-item-dropdown { align-self: center; }
 }
 /* ========== 产品下拉菜单（支持二级 / 三级｜PC hover + 移动端点击） ========== */
-.nav-item-dropdown {
-position: relative;
-}
 /* 按钮与面板之间的透明缓冲，斜向移动鼠标不会丢hover */
 .nav-item-dropdown::after {
 content: "";
