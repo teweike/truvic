@@ -1226,3 +1226,11 @@ margin: 1.2rem 0;
     }
     .line-chip { font-size: 0.8rem; padding: 8px 14px; }
 }
+
+/* 每条产线最多 3 张卡片，不足补空位 */
+.product-card.is-placeholder{border:1px dashed #dde5e2;background:#fbfcfb;box-shadow:none;justify-content:center;}
+.product-card.is-placeholder:hover{transform:none;border-color:#dde5e2;box-shadow:none;}
+.product-card.is-placeholder .ph-body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;flex:1;min-height:260px;padding:28px;text-align:center;}
+.product-card.is-placeholder .ph-line{font-size:13px;font-weight:600;color:#8a9a95;letter-spacing:.02em;}
+.product-card.is-placeholder .ph-link{font-size:13px;font-weight:700;color:#0f4c3a;text-decoration:none;}
+.product-card.is-placeholder .ph-link i{margin-left:6px;}
