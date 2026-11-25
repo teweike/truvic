@@ -428,25 +428,23 @@ if (dropdownTrigger) {
 
 window.addEventListener('DOMContentLoaded', initLazyImages);
 
-/* 产品计数：页面卡片数 > 6 时显示计数标签，6 个及以内保持隐藏（不占位） */
+/* 产品计数：始终显示页面实际卡片数量，卡片增删后自动同步 */
 (function () {
 	var badge = document.querySelector('.line-count');
 	if (!badge) return;
-	var count = document.querySelectorAll('.product-card').length;
-	if (count > 6) {
-		var num = badge.querySelector('b');
-		if (num) num.textContent = count;
-		badge.classList.add('is-on');
+	var num = badge.querySelector('b');
+	var label = badge.querySelector('span');
+	if (!num) return;
+	var many = label ? label.textContent : '';
+	function update() {
+		var count = document.querySelectorAll('.product-card').length;
+		if (String(count) !== num.textContent) num.textContent = count;
+		if (label && many) label.textContent = (count === 1 ? many.replace('machines', 'machine') : many);
 	}
-})();
-
-/* 吸顶面包屑：把 navbar 实际高度写入 --nav-h，移动端换行后依然贴合 */
-(function () {
-	function setNavH() {
-		var nav = document.querySelector('.navbar');
-		if (nav) document.documentElement.style.setProperty('--nav-h', Math.round(nav.getBoundingClientRect().height) + 'px');
+	update();
+	var target = document.querySelector('.product-list') || document.body;
+	if (window.MutationObserver) {
+		new MutationObserver(update).observe(target, { childList: true, subtree: true });
 	}
-	document.addEventListener('DOMContentLoaded', setNavH);
-	window.addEventListener('resize', setNavH);
-	window.addEventListener('load', setNavH);
+	window.addEventListener('load', update);
 })();

@@ -159,5 +159,9 @@ margin-left: -50vw;
 background: #eef2f5;
 }
 
+@media (max-width: 900px) {
+.crumb-bar { position: static; box-shadow: none; }
+}
+
 /* 吸顶面包屑后，锚点滚动多留出面包屑高度 */
 html{scroll-padding-top:140px}
