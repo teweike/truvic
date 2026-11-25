@@ -7,7 +7,7 @@ box-sizing: border-box;
 html {
 -webkit-tap-highlight-color: transparent;
 scroll-behavior: smooth;
-scroll-padding-top: 85px;
+scroll-padding-top: 150px;
 }
 
 body {
@@ -970,7 +970,7 @@ justify-content: center;
 margin-top: 6px;
 }
 html {
-scroll-padding-top: 130px;
+scroll-padding-top: 160px;
 }
 .modal-content-wrap {
 padding: 1.8rem 1.5rem;
@@ -1253,3 +1253,23 @@ width: fit-content;
 .line-count { font-size: 10.5px; letter-spacing: 1.1px; padding: 6px 12px; }
 .line-count b { font-size: 14px; }
 }
+
+/* 面包屑行吸顶：与页眉同宽、同白底，滚动时贴在 navbar 下方 */
+:root { --nav-h: 76px; }
+.crumb-top {
+position: sticky;
+top: var(--nav-h, 76px);
+z-index: 950;
+background: #fff;
+padding: 12px 0;
+border-bottom: 1px solid #e3e9e7;
+box-shadow: 0 8px 18px -16px rgba(15, 40, 35, .45);
+}
+.crumb-top .container.crumb-flex {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 14px;
+flex-wrap: wrap;
+}
+.crumb-top .breadcrumb { margin: 0; }

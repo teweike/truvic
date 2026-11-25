@@ -137,3 +137,18 @@ h2{font-size:27px;font-weight:800;letter-spacing:-.01em;color:var(--green)}
 }
 
 footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:12px;color:#8d9a95;text-align:left}
+
+/* 机型详情页面包屑吸顶 */
+:root { --nav-h: 76px; }
+.crumb-bar {
+position: sticky;
+top: var(--nav-h, 76px);
+z-index: 950;
+background: #fafcfb;
+padding: 14px 0;
+border-bottom: 1px solid #eef2f5;
+box-shadow: 0 8px 18px -18px rgba(15, 40, 35, .4);
+}
+
+/* 吸顶面包屑后，锚点滚动多留出面包屑高度 */
+html{scroll-padding-top:140px}

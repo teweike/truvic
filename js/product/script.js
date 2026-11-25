@@ -439,3 +439,14 @@ window.addEventListener('DOMContentLoaded', initLazyImages);
 		badge.classList.add('is-on');
 	}
 })();
+
+/* 吸顶面包屑：把 navbar 实际高度写入 --nav-h，移动端换行后依然贴合 */
+(function () {
+	function setNavH() {
+		var nav = document.querySelector('.navbar');
+		if (nav) document.documentElement.style.setProperty('--nav-h', Math.round(nav.getBoundingClientRect().height) + 'px');
+	}
+	document.addEventListener('DOMContentLoaded', setNavH);
+	window.addEventListener('resize', setNavH);
+	window.addEventListener('load', setNavH);
+})();

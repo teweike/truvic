@@ -53,3 +53,14 @@ document.querySelectorAll('#footerYear').forEach(function (e) {
     trigger.addEventListener('click', function () {});
   }
 })();
+
+/* 吸顶面包屑：navbar 高度写入 --nav-h */
+(function () {
+	function setNavH() {
+		var nav = document.querySelector('.navbar');
+		if (nav) document.documentElement.style.setProperty('--nav-h', Math.round(nav.getBoundingClientRect().height) + 'px');
+	}
+	document.addEventListener('DOMContentLoaded', setNavH);
+	window.addEventListener('resize', setNavH);
+	window.addEventListener('load', setNavH);
+})();
