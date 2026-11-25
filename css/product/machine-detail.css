@@ -146,8 +146,17 @@ top: var(--nav-h, 76px);
 z-index: 950;
 background: #fafcfb;
 padding: 14px 0;
-border-bottom: 1px solid #eef2f5;
 box-shadow: 0 8px 18px -18px rgba(15, 40, 35, .4);
+}
+.crumb-bar::after {
+content: "";
+position: absolute;
+left: 50%;
+bottom: 0;
+width: 100vw;
+height: 1px;
+margin-left: -50vw;
+background: #eef2f5;
 }
 
 /* 吸顶面包屑后，锚点滚动多留出面包屑高度 */
