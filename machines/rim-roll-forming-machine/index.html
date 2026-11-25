@@ -128,7 +128,7 @@ h2{font-size:27px;font-weight:800;letter-spacing:-.01em;color:var(--green)}
 .faq summary i{color:var(--orange);font-size:12px;margin-top:4px}
 .faq p{margin:12px 0 2px;font-size:13.4px;line-height:1.7;color:var(--muted);text-align:justify}
 
-.rel{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.rel{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
 .card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;text-decoration:none}
 .card .im{aspect-ratio:16/9;background:var(--box);display:flex;align-items:center;justify-content:center}
 .card .im img{width:100%;height:100%;object-fit:contain}
@@ -420,6 +420,10 @@ footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:12px;color
   <div class="sec-head"><h2>Complementary Machines</h2></div>
   <p class="sec-sub">Stations that sit before and after this one.</p>
   <div class="rel">
+    <a class="card" href="../bicycle-motorcycle-roll-forming-machine/">
+      <div class="im"><img src="../../image/machines/bicycle-motorcycle-roll-forming-machine/gal-rings.webp" alt="Bicycle and Motorcycle Roll Forming Machine"></div>
+      <div class="tx"><small>Rim making &middot; forming</small><h4>Bicycle and Motorcycle Roll Forming Machine</h4><p>Forms small two-wheeler rim sections from strip ahead of rim forming.</p></div>
+    </a>
     <a class="card" href="../wheel-rim-flash-butt-welding-machine/">
       <div class="im"><img src="../../image/machines/wheel-rim-flash-butt-welding-machine/hero.webp" alt="Wheel Rim Flash Butt Welding Machine"></div>
       <div class="tx"><small>Rim making &middot; welding</small><h4>Wheel Rim Flash Butt Welding Machine</h4><p>Welds the rim blank before it reaches the forming pass.</p></div>
