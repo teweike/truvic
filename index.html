@@ -633,7 +633,7 @@
         .service-card {
             background: #ffffff;
             border-radius: 32px;
-            padding: 2rem 1.35rem;
+            padding: 2rem 1.5rem;
             transition: all 0.25s;
             border: 1px solid #e2ede7;
             box-shadow: 0 5px 12px rgba(0,0,0,0.02);
@@ -661,29 +661,18 @@
             color: #c2410c;
         }
         
-        .service-head {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+        .service-card .service-title {
             margin-bottom: 0.9rem;
-        }
-
-        .service-head .service-icon {
-            width: 44px;
-            height: 44px;
-            flex: 0 0 44px;
-            margin-bottom: 0;
-            border-radius: 14px;
-        }
-
-        .service-head .service-icon i {
-            font-size: 20px;
-        }
-
-        .service-head h3 {
-            margin-bottom: 0;
             font-size: 1.05rem;
-            line-height: 1.3;
+            line-height: 1.4;
+            font-weight: 700;
+            color: #11231e;
+        }
+
+        .service-title i {
+            color: #c2410c;
+            font-size: 1rem;
+            margin-right: 0.45rem;
         }
 
         .service-card h3 {
@@ -1239,34 +1228,22 @@
         </div>
         <div class="cards-grid">
             <div class="service-card">
-                <div class="service-head">
-                    <div class="service-icon"><i class="fas fa-cogs"></i></div>
-                    <h3>Industrial Sourcing Agent</h3>
-                </div>
+                <h3 class="service-title"><i class="fas fa-cogs"></i> Industrial Sourcing Agent</h3>
                 <p>We audit and qualify the Chinese factories behind each machine line — build quality, safety guarding, electrical standard and ISO/CE documentation — before you place a PO.</p>
                 <!-- <a href="#" class="more-link">Learn More →</a> -->
             </div>
             <div class="service-card">
-                <div class="service-head">
-                    <div class="service-icon"><i class="fas fa-ship"></i></div>
-                    <h3>Heavy Lift Logistics & Customs</h3>
-                </div>
+                <h3 class="service-title"><i class="fas fa-ship"></i> Heavy Lift Logistics &amp; Customs</h3>
                 <p>Breakbulk, RO-RO and 40HQ loading plans, export clearance and door-to-door tracking for mills, coil lines and paper converting equipment.</p>
                 <!-- <a href="#" class="more-link">Learn More →</a> -->
             </div>
             <div class="service-card">
-                <div class="service-head">
-                    <div class="service-icon"><i class="fas fa-chalkboard-user"></i></div>
-                    <h3>Technical Service & Training</h3>
-                </div>
+                <h3 class="service-title"><i class="fas fa-chalkboard-user"></i> Technical Service &amp; Training</h3>
                 <p>Remote commissioning, English manuals, operator training videos and a spare-parts list for every machine we ship.</p>
                 <!-- <a href="#" class="more-link">Learn More →</a> -->
             </div>
             <div class="service-card">
-                <div class="service-head">
-                    <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-                    <h3>Export Marketing & Financing</h3>
-                </div>
+                <h3 class="service-title"><i class="fas fa-chart-line"></i> Export Marketing &amp; Financing</h3>
                 <p>T/T and L/C terms, complete export documentation, and one English-speaking engineer as your contact from inquiry to delivery.</p>
                 <!-- <a href="#" class="more-link">Learn More →</a> -->
             </div>
