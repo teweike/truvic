@@ -428,7 +428,6 @@ alt="Bicycle/Motorcycle Roll Forming Machine">
 <a href="index.html?machine=Bicycle/Motorcycle%20roll%20Forming%20Machine&amp;line=Rim%20Making%20Machinery#contact-form">Request a Quote <i class="fas fa-arrow-right"></i></a>
 </div>
 </div>
-</div>
 
 <div class="product-card"
 data-gallery="image/machines/automatic-rim-blank-loading-rack/hero.webp"
@@ -546,6 +545,7 @@ alt="Four-Column Hydraulic Press">
 <h3>Four-Column Hydraulic Press</h3>
 <p>3,150 kN three-beam four-column press for rim-line work.</p>
 <a href="index.html?machine=Four-Column%20Hydraulic%20Press&amp;line=Rim%20Making%20Machinery#contact-form">Request a Quote <i class="fas fa-arrow-right"></i></a>
+</div>
 </div>
 </div>
 </section>
@@ -675,31 +675,39 @@ document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new D
 </script>
 
 <script>
-/* 每条产线最多展示 3 张产品卡片；不足 3 张时补空位卡片 */
+/* All Processing Machinery：每条产线固定展示 3 张卡片，按日期每天全站轮换一次（不足 3 张自然留白） */
 (function () {
   var LIMIT = 3;
+  function dateSeed() {
+    /* 以 UTC+8 日期为种子，全球访客当天看到同一组 */
+    var d = new Date(Date.now() + 8 * 3600 * 1000);
+    return d.getUTCFullYear() * 10000 + (d.getUTCMonth() + 1) * 100 + d.getUTCDate();
+  }
+  function makeRng(seed) {
+    var s = seed >>> 0;
+    return function () {
+      s = (s * 1664525 + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
   var sections = document.querySelectorAll('.product-section');
-  Array.prototype.forEach.call(sections, function (sec) {
+  Array.prototype.forEach.call(sections, function (sec, idx) {
     var grid = sec.querySelector('.product-grid');
     if (!grid) { return; }
-    var lineLink = sec.querySelector('.section-link');
-    var href = lineLink ? lineLink.getAttribute('href') : 'all-products.html';
-    var cards = Array.prototype.slice.call(grid.querySelectorAll('.product-card:not(.is-placeholder)'));
-    cards.forEach(function (card, i) {
-      if (i >= LIMIT) {
-        card.style.display = 'none';
-        card.setAttribute('data-line-extra', '1');
-        card.setAttribute('aria-hidden', 'true');
-      }
-    });
-    var shown = Math.min(cards.length, LIMIT);
-    for (var i = shown; i < LIMIT; i++) {
-      var ph = document.createElement('div');
-      ph.className = 'product-card is-placeholder';
-      ph.innerHTML = '<div class="ph-body"><span class="ph-line">More models in this line</span>' +
-        '<a class="ph-link" href="' + href + '">View line <i class="fas fa-arrow-right"></i></a></div>';
-      grid.appendChild(ph);
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.product-card'));
+    if (cards.length <= LIMIT) { return; }
+    var rng = makeRng(dateSeed() + idx * 7919);
+    var pool = cards.slice();
+    for (var i = pool.length - 1; i > 0; i--) {
+      var j = Math.floor(rng() * (i + 1));
+      var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
     }
+    var chosen = pool.slice(0, LIMIT);
+    cards.forEach(function (c) { c.style.display = 'none'; });
+    chosen.forEach(function (c) {
+      c.style.display = '';
+      c.removeAttribute('aria-hidden');
+    });
   });
 })();
 </script>
