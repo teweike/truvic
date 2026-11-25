@@ -494,6 +494,14 @@
             color: #1e3a2f;
         }
 
+        /* 首屏主标题：固定两行，逐行两端对齐，字号由脚本压到刚好两行 */
+        .hero-title .hl {
+            display: block;
+            text-align: justify;
+            text-align-last: justify;
+            -webkit-text-align-last: justify;
+        }
+
         
         .hero-content p {
             font-size: clamp(0.95rem, 4vw, 1.1rem);
@@ -1210,7 +1218,7 @@
     <div class="container hero-grid">
         <div class="hero-content">
             <div class="hero-badge"><i class="fas fa-industry"></i> Factory-Direct Processing Machinery</div>
-            <h1>Industrial Processing Machinery,<br>Straight from China’s Factories</h1>
+            <h1 class="hero-title"><span class="hl">Industrial Processing Machinery</span><span class="hl">Straight from China’s Factories</span></h1>
             <p class="justify-text">Welding &amp; cutting, tube &amp; wire, transformer core, wheel rim and paper &amp; plastic processing lines — with technical selection, factory pricing, spare parts and one English-speaking engineer from inquiry to delivery.</p>
             <div class="hero-buttons">
                 <a href="#contact-form" class="btn-primary">Request a Quote <i class="fas fa-arrow-right"></i></a>
@@ -1652,5 +1660,33 @@ document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new D
 </script>
 
 
+
+<script>
+(function(){
+  var h = document.querySelector('.hero-title');
+  if(!h) return;
+  var spans = h.querySelectorAll('.hl');
+  function lines(){
+    var lh = parseFloat(getComputedStyle(h).lineHeight);
+    return Math.round(h.scrollHeight / lh);
+  }
+  function fit(){
+    var max = window.innerWidth > 900 ? 2.4 * 16 : 2.4 * 16, min = 11;
+    h.style.fontSize = max + 'px';
+    if (lines() <= 2 && spans[0].scrollHeight <= max * 1.4) { /* keep */ }
+    var lo = min, hi = max, best = min;
+    for (var i = 0; i < 22; i++) {
+      var mid = (lo + hi) / 2;
+      h.style.fontSize = mid + 'px';
+      if (lines() <= 2) { best = mid; lo = mid; } else { hi = mid; }
+    }
+    h.style.fontSize = best + 'px';
+  }
+  window.addEventListener('load', fit);
+  window.addEventListener('resize', fit);
+  document.addEventListener('DOMContentLoaded', fit);
+  fit();
+})();
+</script>
 </body>
 </html>
