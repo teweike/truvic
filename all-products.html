@@ -1331,11 +1331,10 @@ document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new D
 </script>
 
 <script>
-/* All Processing Machinery：每条产线固定展示 3 张卡片，按日期每天全站轮换一次（不足 3 张自然留白） */
+/* All Processing Machinery：每条产线（每个子组）固定展示 3 张卡片，按日期每天全站轮换一次（不足 3 张自然全部展示） */
 (function () {
   var LIMIT = 3;
   function dateSeed() {
-    /* 以 UTC+8 日期为种子，全球访客当天看到同一组 */
     var d = new Date(Date.now() + 8 * 3600 * 1000);
     return d.getUTCFullYear() * 10000 + (d.getUTCMonth() + 1) * 100 + d.getUTCDate();
   }
@@ -1350,19 +1349,33 @@ document.querySelectorAll('#footerYear').forEach(function(e){e.textContent=new D
   Array.prototype.forEach.call(sections, function (sec, idx) {
     var grid = sec.querySelector('.product-grid');
     if (!grid) { return; }
-    var cards = Array.prototype.slice.call(grid.querySelectorAll('.product-card'));
-    if (cards.length <= LIMIT) { return; }
-    var rng = makeRng(dateSeed() + idx * 7919);
-    var pool = cards.slice();
-    for (var i = pool.length - 1; i > 0; i--) {
-      var j = Math.floor(rng() * (i + 1));
-      var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
-    }
-    var chosen = pool.slice(0, LIMIT);
-    cards.forEach(function (c) { c.style.display = 'none'; });
-    chosen.forEach(function (c) {
-      c.style.display = '';
-      c.removeAttribute('aria-hidden');
+    /* 按 subgroup-head 把卡片分组，小标题自身不参与轮换 */
+    var groups = [[]];
+    Array.prototype.forEach.call(grid.children, function (node) {
+      if (node.classList && node.classList.contains('subgroup-head')) {
+        groups.push([]);
+      } else if (node.classList && node.classList.contains('product-card')) {
+        groups[groups.length - 1].push(node);
+      }
+    });
+    groups.forEach(function (cards, gi) {
+      if (!cards.length) { return; }
+      if (cards.length <= LIMIT) {
+        cards.forEach(function (c) { c.style.display = ''; c.removeAttribute('aria-hidden'); });
+        return;
+      }
+      var rng = makeRng(dateSeed() + idx * 7919 + gi * 104729);
+      var pool = cards.slice();
+      for (var i = pool.length - 1; i > 0; i--) {
+        var j = Math.floor(rng() * (i + 1));
+        var tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+      }
+      var chosen = pool.slice(0, LIMIT);
+      cards.forEach(function (c) { c.style.display = 'none'; });
+      chosen.forEach(function (c) {
+        c.style.display = '';
+        c.removeAttribute('aria-hidden');
+      });
     });
   });
 })();
