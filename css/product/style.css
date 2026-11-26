@@ -79,15 +79,24 @@ justify-content: space-between;
 flex-wrap: wrap;
 gap: 12px;
 }
-.logo { flex: 0 0 auto; }
+.logo { flex: 0 0 auto; display: flex; align-items: center; gap: 0.6rem; }
+.logo-mark {
+width: 46px;
+height: 46px;
+flex: 0 0 46px;
+display: block;
+}
+@media (max-width: 640px) {
+.logo-mark { width: 30px; height: 30px; flex-basis: 30px !important; }
+.logo a.logo-title { font-size: 1.02rem !important; }
+.logo a.logo-title span { font-size: 0.6rem !important; }
+}
 .logo h1, .logo .logo-title {
 font-size: clamp(1.4rem, 6vw, 2rem);
 font-weight: 800;
 letter-spacing: -0.02em;
-background: linear-gradient(135deg, #133a30, #c4451c);
--webkit-background-clip: text;
-background-clip: text;
-color: transparent;
+background: none;
+color: #17362E;
 line-height: 1.2;
 }
 .logo .logo-title {
