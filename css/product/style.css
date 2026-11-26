@@ -80,6 +80,8 @@ flex-wrap: wrap;
 gap: 12px;
 }
 .logo { flex: 0 0 auto; display: flex; align-items: center; gap: 0.6rem; }
+.logo-mark-link { display: block; line-height: 0; flex: 0 0 auto; transition: opacity .18s ease; }
+.logo-mark-link:hover { opacity: .86; }
 .logo-mark {
 width: 46px;
 height: 46px;
