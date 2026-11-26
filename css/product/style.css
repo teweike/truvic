@@ -1153,13 +1153,15 @@ margin: 1.2rem 0;
 .product-grid + .related-lines { margin-top: 2.4rem; border-top: 1px dashed #dfe7e4; }
 
 /* ========== All Products 总览页（多产线聚合） ========== */
+.all-banner { padding: clamp(1rem, 4vw, 2rem) 0; }
 .all-banner h1 { margin-bottom: 0; }
 .line-chips {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    margin: 1.8rem 0 0;
+    margin: 1.8rem auto 0;
+    max-width: 1216px;
 }
 .line-chip {
     display: inline-flex;
@@ -1223,7 +1225,8 @@ margin: 1.2rem 0;
 .section-link i { font-size: 0.78rem; transition: transform .2s ease; }
 .section-link:hover { text-decoration: underline; }
 .section-link:hover i { transform: translateX(3px); }
-.all-products-list { padding-bottom: clamp(2.4rem, 6vw, 3.6rem); }
+.all-products-list { padding-top: calc(clamp(3rem, 8vw, 5rem) - 6px); padding-bottom: clamp(2.4rem, 6vw, 3.6rem); }
+.all-products-list .product-section:first-of-type { padding-top: 0; }
 
 @media (max-width: 768px) {
     .product-section { padding-top: 2rem; }
