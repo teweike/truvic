@@ -23,6 +23,8 @@
     <!-- Font Awesome 6 (免费图标库) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        .logo-home { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; transition: opacity .18s ease; }
+        .logo-home:hover { opacity: .86; }
         /* ---------- 重置 & 全局最佳实践 ---------- */
         * {
             margin: 0;
@@ -80,7 +82,7 @@
         
         .logo { flex: 0 0 auto; display: flex; align-items: center; gap: 0.6rem; }
         .logo-mark { width: 46px; height: 46px; flex: 0 0 46px; display: block; }
-        @media (max-width: 640px) { .logo-mark { width: 30px; height: 30px; flex-basis: 30px !important; } .logo a.logo-title { font-size: 1.02rem !important; } .logo a.logo-title span { font-size: 0.6rem !important; } }
+        @media (max-width: 640px) { .logo-mark { width: 30px; height: 30px; flex-basis: 30px !important; } .logo .logo-title { font-size: 1.02rem !important; } .logo .logo-sub { font-size: 0.6rem !important; } }
 
         .logo h1, .logo .logo-title {
             font-size: clamp(1.4rem, 6vw, 2rem);
@@ -98,16 +100,14 @@
             gap: 3px;
         }
 
-        .logo a.logo-title {
+        .logo .logo-title {
             text-decoration: none;
             cursor: pointer;
         }
 
-        .logo a.logo-title:hover {
-            opacity: 0.86;
-        }
+        
 
-        .logo span {
+        .logo .logo-sub {
             font-size: 0.66rem;
             font-weight: 600;
             color: #c2410c;
@@ -1183,7 +1183,7 @@
 
 <nav class="navbar">
 <div class="container nav-flex">
-<div class="logo"><a class="logo-mark-link" href="index.html" aria-label="TRUVIC Machinery home" title="Back to home"><svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="2" y="2" width="96" height="96" rx="22" fill="#17362E"/><rect x="27" y="26" width="46" height="10" fill="#ffffff"/><rect x="45" y="26" width="10" height="48" fill="#ffffff"/><path d="M76 42C82 56 76 69 58 75" stroke="#C8102E" stroke-width="4.5" stroke-linecap="round" fill="none"/></svg></a><a class="logo-title" href="index.html" style="text-decoration:none"> TRUVIC MACHINERY<span>Processing Machinery & Global Trade</span></a></div>
+<div class="logo"><a class="logo-home" href="index.html" aria-label="TRUVIC Machinery home" title="Back to home"><svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect x="2" y="2" width="96" height="96" rx="22" fill="#17362E"/><rect x="27" y="26" width="46" height="10" fill="#ffffff"/><rect x="45" y="26" width="10" height="48" fill="#ffffff"/><path d="M76 42C82 56 76 69 58 75" stroke="#C8102E" stroke-width="4.5" stroke-linecap="round" fill="none"/></svg><span class="logo-title"> TRUVIC MACHINERY<span class="logo-sub">Processing Machinery & Global Trade</span></span></a></div>
 <ul class="nav-links">
 <li><a href="index.html">HOME</a></li>
 <li><a href="support.html">SERVICES</a></li>
