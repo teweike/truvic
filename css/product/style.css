@@ -1315,3 +1315,49 @@ flex-wrap: wrap;
   color: #667;
 }
 
+
+/* ========== Contact 页微信二维码卡 ========== */
+.content-page .wx-card {
+display: flex;
+align-items: center;
+gap: 1.6rem;
+background: #fff;
+border: 1px solid #e3e9e7;
+border-radius: 16px;
+padding: 1.4rem 1.6rem;
+margin: 1.2rem 0 1.6rem;
+}
+.content-page .wx-card__body { flex: 1 1 auto; min-width: 0; }
+.content-page .wx-card__body h3 {
+font-size: 1.05rem;
+color: #14332a;
+font-weight: 700;
+margin: 0 0 0.5rem;
+}
+.content-page .wx-card__body p {
+margin: 0 0 0.6rem;
+line-height: 1.75;
+}
+.content-page .wx-card__note { font-size: 0.92rem; color: #5d6f66; margin-bottom: 0 !important; }
+.content-page .wx-card__note a {
+color: #c8102e;
+text-decoration: none;
+border-bottom: 1px solid rgba(200, 16, 46, 0.35);
+}
+.content-page .wx-card__note a:hover { border-bottom-color: #c8102e; }
+.content-page .wx-card__qr {
+flex: 0 0 auto;
+display: block;
+width: 178px;
+line-height: 0;
+}
+.content-page .wx-card__qr img {
+width: 100%;
+height: auto;
+border-radius: 10px;
+border: 1px solid #e6ece8;
+}
+@media (max-width: 640px) {
+.content-page .wx-card { flex-direction: column-reverse; align-items: flex-start; gap: 1.1rem; padding: 1.3rem 1.2rem; }
+.content-page .wx-card__qr { width: 150px; align-self: center; }
+}
