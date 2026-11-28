@@ -104,7 +104,7 @@ ORG = {
         "postalCode": "200092",
         "addressCountry": "CN",
     },
-    "sameAs": ["https://www.youtube.com/@WyattWang-TWK"],
+    "sameAs": ["https://www.youtube.com/@teweike-machine"],
     "description": "China-based supplier of processing machinery: welding, sheet metal, tube, transformer, rim and packaging lines, exported worldwide with factory-direct pricing.",
 }
 
